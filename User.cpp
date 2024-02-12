@@ -55,5 +55,19 @@ bool User::deleteAccount() {
     if(!accountalive)
         accountalive=false;
 }
+void User::writeReport(Transaction & transaction) {
+    namefile="report"+name+".txt";
+    std::ofstream outfile (namefile);
+    outfile<< "Details" <<std::endl;
+    outfile << name << std::endl;
+    outfile << address << std::endl;
+    outfile << dateofbirthday <<std::endl;
 
+    outfile <<transaction.getTypeof()<<std::endl;
+    outfile << transaction.getValue() <<std::endl;
+    outfile <<transaction.getSender()<<std::endl;
+    outfile <<transaction.getCause()<<std::endl;
+    outfile <<transaction.getDate()<<std::endl;
+    outfile.close();
+}
 

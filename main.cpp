@@ -6,9 +6,12 @@
 
 int main() {
     int n=10;
-    tm * check;
+    std::string repo= "report";
+    repo.append("gino");
+    repo.append(".txt");
 
-    int q=-4;
-    std::printf("%d", );
+
+
     return 0;
+
 }

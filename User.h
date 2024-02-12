@@ -10,7 +10,8 @@
 #include <time.h>
 
 #include "Account.h"
-
+#include <iostream>
+#include <fstream>
 class User{
 public:
     explicit User(std::string name,std::string address, std::string dateofbirthday){
@@ -40,7 +41,7 @@ public:
     void printTransaction(Transaction &transaction) const;
 
     //metodi leggere e scrivere le transazioni su file
-    void writeReport();
+    void writeReport(Transaction & transaction);
     void readReport() const;
     static void ClearReport();
 
@@ -55,6 +56,7 @@ private:
     std::string dateofBirthday;
     bool accountalive;
     std::unique_ptr<Account> account;
+    std::string namefile;
 };
 
 
