@@ -3,11 +3,14 @@
 //
 #include "Account.h"
 #include <vector>
+#include <time.h>
+#include <ctime>
 void Account::Operation(std::string n, int value, std::string cause) {
+
     if(balance+value>minbalance){
         balance=balance +value;
         if(value>=0)
-            historytransaction.push_back(std::make_unique<Transaction>(value,"Inflow",n,cause));
+            historytransaction.push_back(std::make_unique<Transaction>(value,"Inflow",n,cause,));
         else
             historytransaction.push_back(std::make_unique<Transaction>(value,"Ouflow",n,cause));
     }
