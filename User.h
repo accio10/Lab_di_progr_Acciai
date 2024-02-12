@@ -30,7 +30,7 @@ public:
     bool  OperationtoUser(int value, User & user,std::string cause, Account & account);
     void addTransaction(Transaction & transaction);
     bool removeTransaction(int index);
-    void deleteAccount();
+    bool deleteAccount();
 
     //metodi per la visualizzazzione di informazioni
     void printUser() const;
