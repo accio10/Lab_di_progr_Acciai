@@ -24,7 +24,7 @@ int const Account::getminBalance() const {
     return minbalance;
 }
 
-std::vector<Transaction> Account::getOperation(std::string type) {
+std::vector<Transaction> Account::getOperation(std::string type) const {
     std::vector<Transaction> result;
     for(auto & item: historytransaction)
     {
@@ -35,7 +35,7 @@ std::vector<Transaction> Account::getOperation(std::string type) {
     }
     return result;
 }
-std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) {
+std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) const{
     std::vector<Transaction>result ;
     for (auto & item: historytransaction) {
         if(asctime(dateTime)==item->getDateTime())
