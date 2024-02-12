@@ -41,4 +41,15 @@ std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) {
         if(asctime(dateTime)==item->getDateTime())
             result.push_back(*(it));
     }
+    return result;
+}
+
+Transaction Account::removeTransaction(int index) {
+    std::unique_ptr<Transaction> temp;
+    temp.swap(historytransaction.at(index));
+    historytransaction.erase(historytransaction.begin()+index);
+    return *temp;
+}
+void Account::AddTransaction(const Transaction &transaction) {
+    historytransaction.push_back(std::make_unique<Transaction>(transaction));
 }
