@@ -14,6 +14,23 @@ void Account::Operation(std::string n, int value, std::string cause) {
     else
         throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()+$));
 }
+void Account::OperationforUser(std::string n, int value, std::string cause, Account &account) {
+    if(balance+value>minbalance){
+        balance=balance +value;
+        if(value>=0){
+            historytransaction.push_back(std::make_unique<Transaction>(value,"Inflow",account.getName(),cause));
+            tmp=-value;
+            account.historytransaction.push_back(std::make_unique<Transaction>(value,"Outflow",n,cause))
+        }
+        else {
+            historytransaction.push_back(std::make_unique<Transaction>(value, "Outflow", n, cause));
+            tmp = -value;
+            account.historytransaction.push_back(std::make_unique<Transaction>(value, "Intflow", this->getName(), cause))
+        }
+    }
+    else
+        throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()+$));
+}
 int Account::getBalance() const {
     return balance;
 }
@@ -28,7 +45,7 @@ std::vector<Transaction> Account::getOperation(std::string type) const {
     std::vector<Transaction> result;
     for(auto & item: historytransaction)
     {
-        if(item->gettypeof()=="Inflow")
+        if(item->getTypeof()=="Inflow")
             result.push_back(*(item));
         else
             result.push_back(*(item));
@@ -38,7 +55,7 @@ std::vector<Transaction> Account::getOperation(std::string type) const {
 std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) const{
     std::vector<Transaction>result ;
     for (auto & item: historytransaction) {
-        if(asctime(dateTime)==item->getDateTime())
+        if(asctime(dateTime)==item->getDate())
             result.push_back(*(it));
     }
     return result;

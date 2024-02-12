@@ -8,11 +8,14 @@
 #include <memory>
 #include <time.h>
 #include "Transaction.h"
+
+
 class Account{
 public:
     explicit Account(std::string nam,int mbal,int bal=0):name(std::move(nam)), balance(bal), minbalance(mbal){}
 
     void Operation(std::string n,int value,std::string cause); //Eseguire un operazione
+    void OperationforUser(std::string n,int value,std::string cause,Account & account);
     void AddTransaction(const Transaction & transaction);
     Transaction removeTransaction(int index);
 

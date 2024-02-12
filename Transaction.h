@@ -6,31 +6,33 @@
 #define LAB_DI_PROGR_ACCIAI_TRANSACTION_H
 class Transaction{
 public:
-    Transaction( int tyf, int v);
+    explicit Transaction( int v, std::string cause, std::string tpt,std::string Date){
+        this->valueoftransaction=v;
+        this->typeoftransaction=tpt;
+        this->dateTime=Date;
+        this->cause=cause;
+    }
 
-    std::string gettypeof()
+    std::string getTypeof() const
     {
         return typeoftransaction;
     }
-    void settipeof(int tyf){
-        this->typeoftransaction=tyf;
+    std::string getDate()const{
+        return dateTime;
     }
-    int getvalue()
-    {
+    int getValue() const{
         return valueoftransaction;
     }
-    void setvalue(int v){
-        this->valueoftransaction=v;
-    }
-    std::string getDateTime() const
-    {
-        return DateTime;
+    std::string getCause()const{
+        return cause;
     }
 
 private:
     std::string typeoftransaction;
-    std::string DateTime;
+    std::string dateTime;
+    std::string cause;
     int valueoftransaction;
+
 
 };
 #endif //LAB_DI_PROGR_ACCIAI_TRANSACTION_H
