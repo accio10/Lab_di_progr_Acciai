@@ -8,7 +8,7 @@ class Transaction{
 public:
     Transaction( int tyf, int v);
 
-    int gettypeof()
+    std::string gettypeof()
     {
         return typeoftransaction;
     }
@@ -22,9 +22,14 @@ public:
     void setvalue(int v){
         this->valueoftransaction=v;
     }
+    std::string getDateTime() const
+    {
+        return DateTime;
+    }
 
 private:
-    int typeoftransaction;
+    std::string typeoftransaction;
+    std::string DateTime;
     int valueoftransaction;
 
 };
