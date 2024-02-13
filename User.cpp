@@ -26,48 +26,78 @@ bool User::Operation(int value, std::string cause) {
             return false;
         }
         return true;
+
     }
     return false;
 }
 
 bool User::OperationtoUser(int value, User & user,std::string cause,Account & account1) {
+
     if (accountalive) {
         try {
-            account->OperationforUser(name, value, cause, account1);
+            result=account->OperationforUser(name, value, cause, account1);
         }
         catch (std::runtime_error &e) {
             std::printf(e.what());
             return false;
         }
         return true;
+
     }
     return false;
 }
 void User::addTransaction(Transaction &transaction) {
-    if(accountalive)
+    if(accountalive) {
         account->AddTransaction(transaction);
+    }
 }
 bool User::removeTransaction(int index) {
     if(accountalive)
         account->removeTransaction(index);
 }
 bool User::deleteAccount() {
-    if(!accountalive)
-        accountalive=false;
+    if(!accountalive) {
+        accountalive = false;
+        clearReport();
+    }
 }
-void User::writeReport(Transaction & transaction) {
-    namefile="report"+name+".txt";
-    std::ofstream outfile (namefile);
-    outfile<< "Details" <<std::endl;
-    outfile << name << std::endl;
-    outfile << address << std::endl;
-    outfile << dateofbirthday <<std::endl;
+void User::readReport() const {
+    char c;
+    std::ifstream read(namefile);
+    while(read.get(c))
+        std::cout <<c;
+    read.close();
+}
+void User::clearReport() {
+    std::ofstream del(repo);
+    del<<"";
+    del.close();
+}
+void User::printUser() const {
+    std::cout<< this->getName()<<std::endl;
+    std::cout<< this->getAddress()<<std::endl;
+    std::cout<< this->getDateofBirthday()<<std::endl;
+    std::cout<< this->AccountisAlive()<<std::endl;
+}
 
-    outfile <<transaction.getTypeof()<<std::endl;
-    outfile << transaction.getValue() <<std::endl;
-    outfile <<transaction.getSender()<<std::endl;
-    outfile <<transaction.getCause()<<std::endl;
-    outfile <<transaction.getDate()<<std::endl;
-    outfile.close();
+void User::printInflowHistory() const {
+    std::vector<Transaction> transactions;
+    transactions=this->account->getOperation("Inflow");
+    for (auto & item:transactions) {
+        printTransaction(item);
+    }
+}
+void User::printOutflowHistory() const {
+    std::vector<Transaction> transactions;
+    transactions=this->account->getOperation("Outflow");
+    for (auto & item:transactions) {
+        printTransaction(item);
+    }
+}
+void User::printTransaction(Transaction &transaction) const {
+    std::cout<<transaction.getTypeof()<<std::endl;
+    std::cout<<transaction.getSender()<<std::endl;
+    std::cout<<transaction.getValue()<<std::endl;
+    std::cout<<transaction.getCause()<<std::endl;
 }
 

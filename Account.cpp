@@ -6,33 +6,24 @@
 #include <time.h>
 #include <ctime>
 void Account::Operation(std::string n, int value, std::string cause) {
-
     if(balance+value>minbalance){
         balance=balance +value;
-        if(value>=0)
-            historytransaction.push_back(std::make_unique<Transaction>(value,"Inflow",n,cause));
-        else
-            historytransaction.push_back(std::make_unique<Transaction>(value,"Ouflow",n,cause));
+        if(value>=0) {
+            historytransaction.push_back(std::make_unique<Transaction>(value, "Inflow", n, cause));
+            writeReport(new Transaction(value,"Inflow",n,cause));
+        }
+        else {
+            historytransaction.push_back(std::make_unique<Transaction>(value, "Outflow", n, cause));
+            writeReport(new Transaction(value,"Outflow",n,cause));
+        }
     }
     else
         throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()+$));
 }
 void Account::OperationforUser(std::string n, int value, std::string cause, Account &account) {
-    if(balance+value>minbalance){
-        balance=balance +value;
-        if(value>=0){
-            historytransaction.push_back(std::make_unique<Transaction>(value,"Inflow",account.getName(),cause));
-            tmp=-value;
-            account.historytransaction.push_back(std::make_unique<Transaction>(value,"Outflow",n,cause))
-        }
-        else {
-            historytransaction.push_back(std::make_unique<Transaction>(value, "Outflow", n, cause));
-            tmp = -value;
-            account.historytransaction.push_back(std::make_unique<Transaction>(value, "Intflow", this->getName(), cause))
-        }
-    }
-    else
-        throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()+$));
+    this->Operation(n,value,cause);
+    int tmp=-value;
+    account.Operation(n,tmp,cause);
 }
 int Account::getBalance() const {
     return balance;
@@ -72,4 +63,14 @@ Transaction Account::removeTransaction(int index) {
 }
 void Account::AddTransaction(const Transaction &transaction) {
     historytransaction.push_back(std::make_unique<Transaction>(transaction));
+}
+
+void Account::writeReport(Transaction &transaction) {
+    std::ofstream outfile (namefile,std::ios::app);
+    outfile <<transaction.getTypeof()<<std::endl;
+    outfile << transaction.getValue() <<std::endl;
+    outfile <<transaction.getSender()<<std::endl;
+    outfile <<transaction.getCause()<<std::endl;
+    outfile <<transaction.getDate()<<std::endl;
+    outfile.close();
 }

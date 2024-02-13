@@ -19,6 +19,13 @@ public:
         this->address=address;
         this->dateofBirthday=dateofbirthday;
         accountalive=true;
+        namefile="report"+name+".txt";
+        std::ofstream outfile (namefile);
+        outfile<< "Details" <<std::endl;
+        outfile << name << std::endl;
+        outfile << address << std::endl;
+        outfile << dateofbirthday <<std::endl;
+        outfile.close();
     }
 //getter e metodo per alive
     std::string getName() const;
@@ -41,9 +48,9 @@ public:
     void printTransaction(Transaction &transaction) const;
 
     //metodi leggere e scrivere le transazioni su file
-    void writeReport(Transaction & transaction);
+
     void readReport() const;
-    static void ClearReport();
+    void clearReport();
 
 
 
