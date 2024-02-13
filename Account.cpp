@@ -5,6 +5,10 @@
 #include <vector>
 #include <time.h>
 #include <ctime>
+#include <ios>
+#include <strstream>
+#include <fstream>
+
 void Account::Operation(std::string n, int value, std::string cause) {
     if(balance+value>minbalance){
         balance=balance +value;
@@ -18,7 +22,7 @@ void Account::Operation(std::string n, int value, std::string cause) {
         }
     }
     else
-        throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()+$));
+        throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()));
 }
 void Account::OperationforUser(std::string n, int value, std::string cause, Account &account) {
     this->Operation(n,value,cause);
@@ -28,7 +32,7 @@ void Account::OperationforUser(std::string n, int value, std::string cause, Acco
 int Account::getBalance() const {
     return balance;
 }
-std::string Account::getName() const {
+const std::string Account::getName() const {
     return name;
 }
 int const Account::getminBalance() const {
@@ -39,9 +43,7 @@ std::vector<Transaction> Account::getOperation(std::string type) const {
     std::vector<Transaction> result;
     for(auto & item: historytransaction)
     {
-        if(item->getTypeof()=="Inflow")
-            result.push_back(*(item));
-        else
+        if(item->getTypeof()==type)
             result.push_back(*(item));
     }
     return result;
@@ -50,7 +52,7 @@ std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) const{
     std::vector<Transaction>result ;
     for (auto & item: historytransaction) {
         if(asctime(dateTime)==item->getDate())
-            result.push_back(*(it));
+            result.push_back(*(item));
     }
     return result;
 }
@@ -65,12 +67,12 @@ void Account::AddTransaction(const Transaction &transaction) {
     historytransaction.push_back(std::make_unique<Transaction>(transaction));
 }
 
-void Account::writeReport(Transaction &transaction) {
+void Account::writeReport(Transaction *transaction) {
     std::ofstream outfile (namefile,std::ios::app);
-    outfile <<transaction.getTypeof()<<std::endl;
-    outfile << transaction.getValue() <<std::endl;
-    outfile <<transaction.getSender()<<std::endl;
-    outfile <<transaction.getCause()<<std::endl;
-    outfile <<transaction.getDate()<<std::endl;
+    outfile <<transaction->getTypeof()<<std::endl;
+    outfile << transaction->getValue() <<std::endl;
+    outfile <<transaction->getSender()<<std::endl;
+    outfile <<transaction->getCause()<<std::endl;
+    outfile <<transaction->getDate()<<std::endl;
     outfile.close();
 }

@@ -28,7 +28,7 @@ public:
     std::vector<Transaction> getOperation(std:: string type) const;
     std::vector<Transaction> getTransactionforDate(tm * dateTime) const;
 
-    void writeReport(Transaction & transaction);
+    void writeReport(Transaction *transaction);
 
 private:
     std::string name;

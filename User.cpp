@@ -19,7 +19,7 @@ bool User::AccountisAlive() const {
 bool User::Operation(int value, std::string cause) {
     if(accountalive) {
         try {
-            account->Operation(this.name, value, cause);
+            account->Operation(this->name, value, cause);
         }
         catch (std::runtime_error &e) {
             std::printf(e.what());
@@ -35,7 +35,7 @@ bool User::OperationtoUser(int value, User & user,std::string cause,Account & ac
 
     if (accountalive) {
         try {
-            result=account->OperationforUser(name, value, cause, account1);
+            account->OperationforUser(name, value, cause, account1);
         }
         catch (std::runtime_error &e) {
             std::printf(e.what());
@@ -69,7 +69,7 @@ void User::readReport() const {
     read.close();
 }
 void User::clearReport() {
-    std::ofstream del(repo);
+    std::ofstream del(namefile);
     del<<"";
     del.close();
 }

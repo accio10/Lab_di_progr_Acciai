@@ -6,11 +6,11 @@
 #define LAB_DI_PROGR_ACCIAI_TRANSACTION_H
 class Transaction{
 public:
-    explicit Transaction( int v, std::string tpt, std::string sender,std::string causa,std::string Date){
+    explicit Transaction( int v, std::string tpt, std::string sender,std::string causa){
         this->valueoftransaction=v;
         this->sender=sender;
         this->typeoftransaction=tpt;
-        this->dateTime=Date;
+
         this->cause=cause;
     }
 

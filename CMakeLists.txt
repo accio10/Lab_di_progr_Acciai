@@ -3,4 +3,6 @@ project(Lab_di_progr_Acciai)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Lab_di_progr_Acciai main.cpp)
+add_executable(Lab_di_progr_Acciai main.cpp
+        Account.cpp
+        User.cpp)
