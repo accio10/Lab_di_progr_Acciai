@@ -6,12 +6,22 @@
 #define LAB_DI_PROGR_ACCIAI_TRANSACTION_H
 class Transaction{
 public:
-    explicit Transaction( int v, std::string tpt, std::string sender,std::string causa){
+    Transaction( int v, std::string tpt, std::string sender,std::string causa){
         this->valueoftransaction=v;
         this->sender=sender;
         this->typeoftransaction=tpt;
-
+        time_t t=time(nullptr);
+        dateTime= ctime(&t);
         this->cause=cause;
+    }
+    Transaction(int value, std::string tpt,std::string sender,std::string causa,tm* set)
+    {
+        this->valueoftransaction=value;
+        this->sender=sender;
+        this->typeoftransaction=tpt;
+        dateTime= asctime(set);
+        this->cause=cause;
+
     }
 
     std::string getTypeof() const
@@ -30,6 +40,8 @@ public:
     std::string getSender() const
     {return sender;}
 
+    bool EqualDate(tm* a, tm*b);
+
 private:
     std::string typeoftransaction;
     std::string dateTime;
@@ -37,6 +49,13 @@ private:
     int valueoftransaction;
     std::string sender;
 
-
 };
+
+bool Transaction::EqualDate(tm *a, tm *b) {
+    if(a->tm_year==b->tm_year && a->tm_mon==b->tm_mon &&a->tm_mday==b->tm_mday )
+        return true;
+    else
+        return false;
+}
+
 #endif //LAB_DI_PROGR_ACCIAI_TRANSACTION_H

@@ -12,6 +12,7 @@
 void Account::Operation(std::string n, int value, std::string cause) {
     if(balance+value>minbalance){
         balance=balance +value;
+
         if(value>=0) {
             historytransaction.push_back(std::make_unique<Transaction>(value, "Inflow", n, cause));
             writeReport(new Transaction(value,"Inflow",n,cause));
@@ -69,10 +70,10 @@ void Account::AddTransaction(const Transaction &transaction) {
 
 void Account::writeReport(Transaction *transaction) {
     std::ofstream outfile (namefile,std::ios::app);
-    outfile <<transaction->getTypeof()<<std::endl;
-    outfile << transaction->getValue() <<std::endl;
-    outfile <<transaction->getSender()<<std::endl;
-    outfile <<transaction->getCause()<<std::endl;
-    outfile <<transaction->getDate()<<std::endl;
+    outfile <<"Type: "<<transaction->getTypeof()<<std::endl;
+    outfile <<"Value: "<< transaction->getValue() <<std::endl;
+    outfile <<"Sender: "<<transaction->getSender()<<std::endl;
+    outfile <<"Cause: "<<transaction->getCause()<<std::endl;
+    outfile <<"Date: "<<transaction->getDate()<<std::endl;
     outfile.close();
 }

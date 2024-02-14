@@ -53,10 +53,6 @@ public:
     void clearReport();
 
 
-
-
-
-
 private:
     std::string name;
     std::string address;

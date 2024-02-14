@@ -53,7 +53,14 @@ void User::addTransaction(Transaction &transaction) {
 }
 bool User::removeTransaction(int index) {
     if(accountalive)
-        account->removeTransaction(index);
+        try{
+            account->removeTransaction(index);
+        }
+        catch(std::out_of_range & e){
+            std::cout << e.what()<< std::endl;
+            return false;
+        }
+        return true;
 }
 bool User::deleteAccount() {
     if(!accountalive) {
@@ -95,9 +102,15 @@ void User::printOutflowHistory() const {
     }
 }
 void User::printTransaction(Transaction &transaction) const {
-    std::cout<<transaction.getTypeof()<<std::endl;
-    std::cout<<transaction.getSender()<<std::endl;
-    std::cout<<transaction.getValue()<<std::endl;
-    std::cout<<transaction.getCause()<<std::endl;
+    std::cout<<"Type: "<<transaction.getTypeof()<<std::endl;
+    std::cout<<"Sender: "<<transaction.getSender()<<std::endl;
+    std::cout<<"Importo: "<<transaction.getValue()<<std::endl;
+    std::cout<<"Causa: "<<transaction.getCause()<<std::endl;
 }
 
+void User::printforDate(tm *Datetransaction) const {
+    std::vector<Transaction> transaction=account->getTransactionforDate(Datetransaction);
+    for (auto & item: transaction) {
+        printTransaction(item);
+    }
+}
