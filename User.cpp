@@ -127,3 +127,8 @@ void User::printforDate(tm *Datetransaction) const {
         printTransaction(item);
     }
 }
+void User::printAllTransaction() const {
+    std::vector<Transaction> res=account->getAllOperation();
+    for(auto &item:res)
+        printTransaction(item);
+}

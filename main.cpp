@@ -6,6 +6,8 @@
 
 User * GenerateAccount();
 
+tm* CreateDate();
+
 bool Checkinput(int i, int i1, int i2);
 
 bool CheckDate(tm *pTm);
@@ -16,14 +18,18 @@ void CreateAccount(User *pUser);
 
 void Payment(User *user, std::vector<std::unique_ptr<User>> *vector);
 
+void PrintTransaction(User *user ,int i);
+
 int main() {
 
-    int scelta=0;
+    int sel=0;
     User* user;
     std::vector<std::unique_ptr<User>> contacts;
     std::cout<< "Benvenuto premere 1 per creare un account oppure 2 per uscire "<<std::endl;
-    std::cin >>scelta;
-    switch (scelta) {
+    do {
+        std::cin >> sel;
+    } while (!Checkinput(sel, 1 ,2));
+    switch (sel) {
         case 1: {
             user = GenerateAccount();
             CreateAccount(user);
@@ -35,28 +41,57 @@ int main() {
     }
     while(true)
     {
-        int scelta;
+        int scelta=0;
         Operazioni();
-        while(!Checkinput(scelta,0,7));
+        do{
+         std::cin>>scelta;
+        }while(!Checkinput(scelta,0,8));
         switch(scelta){
             case 1: {
                 int importo;
                 std::cout<<"Digitare l'importo da prelevare"<<std::endl;
-                std::cin>>importo;
-                while(!Checkinput(importo,1,650));
+                do {
+                    std::cin >> importo;
+                }while(!Checkinput(importo,1,650));
                 user->Operation(-importo,"Prelievo");
             }
             case 2:
             {
                 int importo;
                 std::cout<< "Digitare la somma da versare"<<std::endl;
-                std::cin>>importo;
-                while(!Checkinput(importo,0,1000));
+                do {
+                    std::cin >> importo;
+                }while(!Checkinput(importo,0,1000));
                 user->Operation(importo,"Versamento");
             }
             case 3:
             {
                 Payment(user,& contacts);
+            }
+            case 4:
+            {
+                user->printUser();
+            }
+            case 5:
+            {
+                int sel;
+                std::cout<<"Digitare 1 se si vuole visualizzare tutte le operazioni"<<std::endl;
+                std::cout<<"Digitare 2 se si vuole vedere le operazioni in uscita"<<std::endl;
+                std::cout<<"Digitare 3 se si vuole vedere le operazioni in entrata"<<std::endl;
+                std::cin>> sel;
+                PrintTransaction(user,sel);
+            }
+            case 6:
+            {
+                tm* Date= CreateDate();
+            }
+            case 7:
+            {
+                user->readReport();
+            }
+            case 8:
+            {
+                user->deleteAccount();
             }
         }
 
@@ -65,12 +100,25 @@ int main() {
 
 }
 
+void PrintTransaction(User * user,int i) {
+    switch (i) {
+        case 1:
+            user->printAllTransaction();
+        case  2:
+            user->printInflowHistory();
+        case 3:
+            user->printOutflowHistory();
+
+    }
+}
+
 void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
     int scelta=0;
     std::unique_ptr<User> tmp;
     std::cout<<"Premi 1 per i contatti in rubrica, premi 2 per un nuovo contatto "<<std::endl;
-    std::cin>>scelta;
-    while(!Checkinput(scelta,1,2));
+    do {
+        std::cin >> scelta;
+    }while(!Checkinput(scelta,1,2));
     switch(scelta){
         case 1:{
             std::string nome;
@@ -86,6 +134,12 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
         }
         case 2:
         {
+            User* tmp= GenerateAccount();
+            CreateAccount(tmp);
+            int value;
+            std::cout<<"Inserire l'importo da versare"<<std::endl;
+            std::cin>>value;
+            user->OperationtoUser(-value,"Payment",tmp->getAccount());
 
         }
     }
@@ -103,12 +157,12 @@ void Operazioni() {
     std::cout <<"Premere 3 per fare un versamento"<<std::endl;
     std::cout <<"Premere 4 per vedere le informazioni relative all'account" <<std::endl;
     std::cout<< "Premere 5 per vedere le transazioni eseguite"<<std::endl;
-    std::cout<< "Premere 6 per leggere il proprio report"<< std::endl;
-    std::cout<< "Premere 7 per cancellare l'account "<<std::endl;
+    std::cout<<"Premere 6 per cercare una transazione per data"<<std::endl;
+    std::cout<< "Premere 7 per leggere il proprio report"<< std::endl;
+    std::cout<< "Premere 8 per cancellare l'account "<<std::endl;
     std::cout<< "Premere 0 per uscire "<<std::endl;
 
 }
-
 
 User * GenerateAccount() {
     std::string nome;
@@ -124,25 +178,33 @@ User * GenerateAccount() {
     do{
         if(c!=0)
             std::cout<< "Data invalida, prego riprovare l'inserimento: "<<std::endl;
-        int day;
-        std::cout<< "Prego inserire il giorno di naschita: "<<std::endl;
-        std::cin>> day;
-        while(!Checkinput(day, 1, 31));
-        int month;
-        std::cout<<"Prego inserire il mese di nascita: "<<std::endl;
-        std::cin>>month;
-        while(!Checkinput(month,1,12));
-        int year;
-        std::cout<<"Prego inserire l'anno di nascita: "<<std::endl;
-        std::cin >> year;
-        datadinascita->tm_mday=day;
-        datadinascita->tm_mon=month;
-        datadinascita->tm_year=year;
+            datadinascita=CreateDate();
         c++;
 
     }while(CheckDate(datadinascita));
     User * user= new User(nome,indirizzo,datadinascita);
     return user;
+}
+tm* CreateDate()
+{
+    tm* res;
+    int day;
+    std::cout<< "Prego inserire il giorno : "<<std::endl;
+    do {
+        std::cin >> day;
+    }while(!Checkinput(day, 1, 31));
+    int month;
+    std::cout<<"Prego inserire il mese : "<<std::endl;
+    do {
+        std::cin >> month;
+    }while(!Checkinput(month,1,12));
+    int year;
+    std::cout<<"Prego inserire l'anno : "<<std::endl;
+    std::cin >> year;
+    res->tm_mday=day;
+    res->tm_mon=month;
+    res->tm_year=year;
+    return res;
 }
 
 bool CheckDate(tm *ptm) {
@@ -179,8 +241,7 @@ bool Checkinput(int input,int minvalue,int maxvalue) {
                 throw std::out_of_range("Il valore che hai inserito non è corretto, è più piccolo del valore minimo accettato");
             if(input>maxvalue)
                 throw std::out_of_range("Il valore che hai inserito non è corretto, è più grande del valore minimo accettato");
-            if(input==0)
-                throw std::out_of_range("0 è un valore illegale");
+
         }
         else
             throw std::out_of_range("Il valore che hai inserito non è corretto");

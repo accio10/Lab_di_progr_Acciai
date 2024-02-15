@@ -44,11 +44,13 @@ public:
     bool deleteAccount();
     void AddAccount(Account &a);
     //metodi per la visualizzazzione di informazioni
+
     void printUser() const;
     void printInflowHistory() const;
     void printOutflowHistory() const;
     void printforDate(tm *Datetransaction) const;
     void printTransaction(Transaction &transaction) const;
+    void printAllTransaction() const;
 
     //metodi leggere e scrivere le transazioni su file
 
