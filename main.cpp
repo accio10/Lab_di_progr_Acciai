@@ -208,10 +208,13 @@ tm* CreateDate()
 }
 
 bool CheckDate(tm *ptm) {
+    time_t data;
     tm* Data;
+    data= time(NULL);
+    Data= localtime(&data);
     int trentagiorni[]={4,6,9,11};
     int trentunogiorni[] ={1,3,5,7,8,10,12};
-    if(1900<=ptm->tm_year && ptm->tm_year-Data->tm_year>=18 ) {
+    if(1900<=ptm->tm_year && (Data->tm_year+1900)-ptm->tm_year>=18 ) {
         for(int i :trentunogiorni)
         {
             if(ptm->tm_mon==i)
@@ -248,6 +251,7 @@ bool Checkinput(int input,int minvalue,int maxvalue) {
     }catch(std::out_of_range &e)
     {
         std::cout<< e.what()<<std::endl;
+        std::cout<<"Inserire nuovamente il dato:"<<std::endl;
         std::cin.clear();
         return false;
     }
