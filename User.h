@@ -14,7 +14,7 @@
 #include <fstream>
 class User{
 public:
-    explicit User(std::string name,std::string address, std::string dateofbirthday){
+    explicit User(std::string name,std::string address, tm* dateofbirthday){
         this->name=name;
         this->address=address;
         this->dateofBirthday=dateofbirthday;
@@ -30,16 +30,19 @@ public:
 //getter e metodo per alive
     std::string getName() const;
     std::string getAddress() const;
-    std::string getDateofBirthday() const;
+    tm* getDateofBirthday() const;
     bool AccountisAlive() const;
+    std::unique_ptr<Account>& getAccount();
+    std::string getNamefile()const ;
+
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
     bool Operation(int value,std::string cause);
-    bool  OperationtoUser(int value, User & user,std::string cause, Account & account);
+    bool  OperationtoUser(int value, std::string cause, std::unique_ptr<Account>& account);
     void addTransaction(Transaction & transaction);
     bool removeTransaction(int index);
     bool deleteAccount();
-
+    void AddAccount(Account &a);
     //metodi per la visualizzazzione di informazioni
     void printUser() const;
     void printInflowHistory() const;
@@ -56,7 +59,7 @@ public:
 private:
     std::string name;
     std::string address;
-    std::string dateofBirthday;
+    tm* dateofBirthday;
     bool accountalive;
     std::unique_ptr<Account> account;
     std::string namefile;

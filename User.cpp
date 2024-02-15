@@ -9,12 +9,23 @@ std::string User::getName() const {
 std::string User::getAddress() const {
     return address;
 }
-std::string User::getDateofBirthday() const {
+tm* User::getDateofBirthday() const {
     return dateofBirthday;
 }
 bool User::AccountisAlive() const {
     return accountalive;
 }
+std::string User::getNamefile() const {
+    return namefile;
+}
+void User::AddAccount(Account &a) {
+    this->account=std::make_unique<Account>(a.getName(),namefile,a.getminBalance());
+}
+std::unique_ptr<Account>& User::getAccount() {
+    std::unique_ptr<Account> tmp=std::make_unique<Account>(name,namefile,-10000,account->getBalance());
+    return tmp;
+}
+
 
 bool User::Operation(int value, std::string cause) {
     if(accountalive) {
@@ -31,7 +42,7 @@ bool User::Operation(int value, std::string cause) {
     return false;
 }
 
-bool User::OperationtoUser(int value, User & user,std::string cause,Account & account1) {
+bool User::OperationtoUser(int value,std::string cause,std::unique_ptr<Account>& account1) {
 
     if (accountalive) {
         try {
@@ -66,7 +77,9 @@ bool User::deleteAccount() {
     if(!accountalive) {
         accountalive = false;
         clearReport();
+        return true;
     }
+    return false;
 }
 void User::readReport() const {
     char c;

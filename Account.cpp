@@ -12,7 +12,6 @@
 void Account::Operation(std::string n, int value, std::string cause) {
     if(balance+value>minbalance){
         balance=balance +value;
-
         if(value>=0) {
             historytransaction.push_back(std::make_unique<Transaction>(value, "Inflow", n, cause));
             writeReport(new Transaction(value,"Inflow",n,cause));
@@ -25,10 +24,10 @@ void Account::Operation(std::string n, int value, std::string cause) {
     else
         throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()));
 }
-void Account::OperationforUser(std::string n, int value, std::string cause, Account &account) {
+void Account::OperationforUser(std::string n, int value, std::string cause, std::unique_ptr<Account>& account) {
     this->Operation(n,value,cause);
     int tmp=-value;
-    account.Operation(n,tmp,cause);
+    account->Operation(n,tmp,cause);
 }
 int Account::getBalance() const {
     return balance;
@@ -55,6 +54,12 @@ std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) const{
         if(asctime(dateTime)==item->getDate())
             result.push_back(*(item));
     }
+    return result;
+}
+std::vector<Transaction> Account::getAllOperation() const {
+    std::vector<Transaction> result;
+    for(auto &item: historytransaction)
+        result.push_back(*(item));
     return result;
 }
 
