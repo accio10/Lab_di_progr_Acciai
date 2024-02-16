@@ -33,6 +33,7 @@ int main() {
         case 1: {
             user = GenerateAccount();
             CreateAccount(user);
+            break;
         }
         case 2:{
             std::cout<< "Exit";
@@ -45,7 +46,7 @@ int main() {
         Operazioni();
         do{
          std::cin>>scelta;
-        }while(!Checkinput(scelta,0,8));
+        }while(!Checkinput(scelta,0,9));
         switch(scelta){
             case 1: {
                 int importo;
@@ -54,6 +55,8 @@ int main() {
                     std::cin >> importo;
                 }while(!Checkinput(importo,1,650));
                 user->Operation(-importo,"Prelievo");
+                std::cout<<"Prelievo effettuato!"<<std::endl;
+                break;
             }
             case 2:
             {
@@ -63,16 +66,28 @@ int main() {
                     std::cin >> importo;
                 }while(!Checkinput(importo,0,1000));
                 user->Operation(importo,"Versamento");
+                std::cout<<"Versamento effettuato!"<<std::endl;
+                break;
             }
             case 3:
             {
-                Payment(user,& contacts);
+                int balance=user->getAccount()->getBalance();
+                std::cout<<"Il saldo attuale è: " <<std::endl;
+                std::cout<<balance <<std::endl;
+                break;
             }
             case 4:
             {
-                user->printUser();
+                Payment(user,& contacts);
+                std::cout<<"Pagamento effettuato!"<<std::endl;
+                break;
             }
             case 5:
+            {
+                user->printUser();
+                break;
+            }
+            case 6:
             {
                 int sel;
                 std::cout<<"Digitare 1 se si vuole visualizzare tutte le operazioni"<<std::endl;
@@ -80,18 +95,30 @@ int main() {
                 std::cout<<"Digitare 3 se si vuole vedere le operazioni in entrata"<<std::endl;
                 std::cin>> sel;
                 PrintTransaction(user,sel);
-            }
-            case 6:
-            {
-                tm* Date= CreateDate();
+                break;
             }
             case 7:
             {
-                user->readReport();
+                tm* Date= CreateDate();
+                user->printforDate(Date);
+                break;
             }
             case 8:
             {
+                std::cout<<"Il report è questo:"<<std::endl;
+                user->readReport();
+                break;
+            }
+            case 9:
+            {
                 user->deleteAccount();
+                std::cout<<"eliminazione completata"<<std::endl;
+                break;
+            }
+            case 0:
+            {
+                std::cout<<"Quitting...";
+                return 0;
             }
         }
 
@@ -102,12 +129,18 @@ int main() {
 
 void PrintTransaction(User * user,int i) {
     switch (i) {
-        case 1:
+        case 1: {
             user->printAllTransaction();
-        case  2:
+            break;
+        }
+        case  2: {
             user->printInflowHistory();
-        case 3:
+            break;
+        }
+        case 3: {
             user->printOutflowHistory();
+            break;
+        }
 
     }
 }
@@ -131,6 +164,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             int value;
             std::cin>>value;
             user->OperationtoUser(-value,"Payment", tmp->getAccount());
+            break;
         }
         case 2:
         {
@@ -140,7 +174,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
             user->OperationtoUser(-value,"Payment",tmp->getAccount());
-
+            break;
         }
     }
 
@@ -154,12 +188,13 @@ void CreateAccount(User *pUser) {
 void Operazioni() {
     std::cout<< "Premere 1 per Prelevare"<<std::endl;
     std::cout<< "Premere 2 per Versare"<<std::endl;
-    std::cout <<"Premere 3 per fare un versamento"<<std::endl;
-    std::cout <<"Premere 4 per vedere le informazioni relative all'account" <<std::endl;
-    std::cout<< "Premere 5 per vedere le transazioni eseguite"<<std::endl;
-    std::cout<<"Premere 6 per cercare una transazione per data"<<std::endl;
-    std::cout<< "Premere 7 per leggere il proprio report"<< std::endl;
-    std::cout<< "Premere 8 per cancellare l'account "<<std::endl;
+    std::cout<<"Premere 3 per vedere il saldo"<<std::endl;
+    std::cout <<"Premere 4 per fare un versamento"<<std::endl;
+    std::cout <<"Premere 5 per vedere le informazioni relative all'account" <<std::endl;
+    std::cout<< "Premere 6 per vedere le transazioni eseguite"<<std::endl;
+    std::cout<<"Premere 7 per cercare una transazione per data"<<std::endl;
+    std::cout<< "Premere 8 per leggere il proprio report"<< std::endl;
+    std::cout<< "Premere 9 per cancellare l'account "<<std::endl;
     std::cout<< "Premere 0 per uscire "<<std::endl;
 
 }
@@ -178,10 +213,11 @@ User * GenerateAccount() {
     do{
         if(c!=0)
             std::cout<< "Data invalida, prego riprovare l'inserimento: "<<std::endl;
-            datadinascita=CreateDate();
+        std::cout<<"Inserire i dati relativi alla data di nascita"<<std::endl;
+        datadinascita=CreateDate();
         c++;
 
-    }while(CheckDate(datadinascita));
+    }while(!CheckDate(datadinascita));
     User * user= new User(nome,indirizzo,datadinascita);
     return user;
 }

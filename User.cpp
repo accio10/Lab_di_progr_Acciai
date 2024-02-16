@@ -22,8 +22,9 @@ void User::AddAccount(Account &a) {
     this->account=std::make_unique<Account>(a.getName(),namefile,a.getminBalance());
 }
 std::unique_ptr<Account>& User::getAccount() {
-    std::unique_ptr<Account> tmp=std::make_unique<Account>(name,namefile,-10000,account->getBalance());
-    return tmp;
+    //std::unique_ptr<Account> tmp=std::make_unique<Account>(name,namefile,-10000,account->getBalance());
+    //return tmp;
+    return this->account;
 }
 
 

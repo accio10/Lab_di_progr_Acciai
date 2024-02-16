@@ -12,10 +12,11 @@ public:
         this->valueoftransaction=v;
         this->sender=sender;
         this->typeoftransaction=tpt;
+        this->cause=causa;
         time_t t;
         t=time(nullptr);
         dateTime= ctime(&t);
-        this->cause=cause;
+
     }
     Transaction(int value, std::string tpt,std::string sender,std::string causa,tm* set)
     {
