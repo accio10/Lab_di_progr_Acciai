@@ -134,11 +134,11 @@ void PrintTransaction(User * user,int i) {
             break;
         }
         case  2: {
-            user->printInflowHistory();
+            user->printOutflowHistory();
             break;
         }
         case 3: {
-            user->printOutflowHistory();
+            user->printInflowHistory();
             break;
         }
 

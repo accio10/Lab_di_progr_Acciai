@@ -102,34 +102,53 @@ void User::printUser() const {
 }
 
 void User::printInflowHistory() const {
-    std::vector<Transaction> transactions;
-    transactions=this->account->getOperation("Inflow");
-    for (auto & item:transactions) {
-        printTransaction(item);
+    if(accountalive) {
+        std::vector<Transaction> transactions;
+        transactions = this->account->getOperation("Inflow");
+        bool find = false;
+        for (auto &item: transactions) {
+            printTransaction(item);
+            find = true;
+        }
+        if (!find)
+            std::cout << "Nessuna operazione in entrata trovata!" << std::endl;
     }
+
 }
 void User::printOutflowHistory() const {
-    std::vector<Transaction> transactions;
-    transactions=this->account->getOperation("Outflow");
-    for (auto & item:transactions) {
-        printTransaction(item);
+    if(accountalive) {
+        std::vector<Transaction> transactions;
+        transactions = this->account->getOperation("Outflow");
+        bool find = false;
+        for (auto &item: transactions) {
+            printTransaction(item);
+            find = true;
+        }
+        if (!find)
+            std::cout << "Nessuna operazione in uscita trovata!" << std::endl;
     }
 }
 void User::printTransaction(Transaction &transaction) const {
-    std::cout<<"Type: "<<transaction.getTypeof()<<std::endl;
-    std::cout<<"Sender: "<<transaction.getSender()<<std::endl;
-    std::cout<<"Importo: "<<transaction.getValue()<<std::endl;
-    std::cout<<"Causa: "<<transaction.getCause()<<std::endl;
+    if(accountalive) {
+        std::cout << "Type: " << transaction.getTypeof() << std::endl;
+        std::cout << "Sender: " << transaction.getSender() << std::endl;
+        std::cout << "Importo: " << transaction.getValue() << std::endl;
+        std::cout << "Causa: " << transaction.getCause() << std::endl;
+    }
 }
 
 void User::printforDate(tm *Datetransaction) const {
-    std::vector<Transaction> transaction=account->getTransactionforDate(Datetransaction);
-    for (auto & item: transaction) {
-        printTransaction(item);
+    if(accountalive) {
+        std::vector<Transaction> transaction = account->getTransactionforDate(Datetransaction);
+        for (auto &item: transaction) {
+            printTransaction(item);
+        }
     }
 }
 void User::printAllTransaction() const {
-    std::vector<Transaction> res=account->getAllOperation();
-    for(auto &item:res)
-        printTransaction(item);
+    if(accountalive) {
+        std::vector<Transaction> res = account->getAllOperation();
+        for (auto &item: res)
+            printTransaction(item);
+    }
 }
