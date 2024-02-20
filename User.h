@@ -19,13 +19,7 @@ public:
         this->address=address;
         this->dateofBirthday=dateofbirthday;
         accountalive=true;
-        namefile="report"+name+".txt";
-        std::ofstream outfile (namefile);
-        outfile<< "Details" <<std::endl;
-        outfile << name << std::endl;
-        outfile << address << std::endl;
-        outfile << dateofbirthday <<std::endl;
-        outfile.close();
+        GenerateReport();
     }
 //getter e metodo per alive
     std::string getName() const;
@@ -34,14 +28,14 @@ public:
     bool AccountisAlive() const;
     std::unique_ptr<Account>& getAccount();
     std::string getNamefile()const ;
-
+    void GenerateReport();
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
     bool Operation(int value,std::string cause);
     bool  OperationtoUser(int value, std::string cause, std::unique_ptr<Account>& account);
     void addTransaction(Transaction & transaction);
     bool removeTransaction(int index);
-    bool deleteAccount();
+    void deleteAccount();
     void AddAccount(Account &a);
     //metodi per la visualizzazzione di informazioni
 

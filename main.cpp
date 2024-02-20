@@ -113,7 +113,9 @@ int main() {
             {
                 user->deleteAccount();
                 std::cout<<"eliminazione completata"<<std::endl;
-                break;
+                std::cout<<"Quitting....."<<std::endl;
+                std::cout<<" Grazie per averci scelto buona serata"<<std::endl;
+                return 0;
             }
             case 0:
             {
@@ -234,9 +236,10 @@ tm* CreateDate()
 {
     tm* res;
     int day;
-    std::cout<< "Prego inserire il giorno : "<<std::endl;
+
     do {
-        std::cin >> day;
+        std::cout<< "Prego inserire il giorno : "<<std::endl;
+        std::cin>>day;
     }while(!Checkinput(day, 1, 31));
     int month;
     std::cout<<"Prego inserire il mese : "<<std::endl;
@@ -295,11 +298,10 @@ bool Checkinput(int input,int minvalue,int maxvalue) {
             throw std::out_of_range("Il valore che hai inserito non è corretto");
     }catch(std::out_of_range &e)
     {
+        std::cin.clear(); std::cin.ignore();
         std::cout<< e.what()<<std::endl;
         std::cout<<"Inserire nuovamente il dato:"<<std::endl;
-        std::cin.clear();
         return false;
     }
     return true;
 }
-

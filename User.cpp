@@ -74,13 +74,9 @@ bool User::removeTransaction(int index) {
         }
         return true;
 }
-bool User::deleteAccount() {
-    if(!accountalive) {
+void User::deleteAccount() {
         accountalive = false;
         clearReport();
-        return true;
-    }
-    return false;
 }
 void User::readReport() const {
     char c;
@@ -153,4 +149,16 @@ void User::printAllTransaction() const {
         for (auto &item: res)
             printTransaction(item);
     }
+}
+void User::GenerateReport() {
+    namefile="report"+name+".txt";
+    std::fstream outfile1(namefile);
+    if(outfile1.is_open())
+        namefile="report"+name+"1.txt";
+    std::ofstream outfile (namefile);
+    outfile<< "Details" <<std::endl;
+    outfile << name << std::endl;
+    outfile << address << std::endl;
+    outfile << asctime(dateofBirthday) <<std::endl;
+    outfile.close();
 }
