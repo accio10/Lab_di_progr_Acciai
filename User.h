@@ -14,12 +14,12 @@
 #include <fstream>
 class User{
 public:
-    explicit User(std::string name,std::string address, tm* dateofbirthday){
+    explicit User(std::string name,std::string address, tm* dateofbirthday,bool crea){
         this->name=name;
         this->address=address;
         this->dateofBirthday=dateofbirthday;
         accountalive=true;
-        GenerateReport();
+        GenerateReport(crea);
     }
 //getter e metodo per alive
     std::string getName() const;
@@ -28,7 +28,7 @@ public:
     bool AccountisAlive() const;
     std::unique_ptr<Account>& getAccount();
     std::string getNamefile()const ;
-    void GenerateReport();
+    void GenerateReport(bool crea);
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
     bool Operation(int value,std::string cause);

@@ -2,6 +2,9 @@
 // Created by Nathan on 12/02/2024.
 //
 #include "User.h"
+#include <iomanip>
+#include <iostream>
+
 
 std::string User::getName() const {
     return name;
@@ -86,9 +89,9 @@ void User::readReport() const {
     read.close();
 }
 void User::clearReport() {
-    std::ofstream del(namefile);
-    del<<"";
-    del.close();
+    std:: ofstream toClear;
+    toClear.open(namefile, std:: fstream::out | std:: fstream::trunc);
+    toClear.close();
 }
 void User::printUser() const {
     std::cout<< this->getName()<<std::endl;
@@ -150,15 +153,19 @@ void User::printAllTransaction() const {
             printTransaction(item);
     }
 }
-void User::GenerateReport() {
+void User::GenerateReport(bool creato) {
     namefile="report"+name+".txt";
     std::fstream outfile1(namefile);
     if(outfile1.is_open())
-        namefile="report"+name+"1.txt";
+        if(creato)
+            namefile="report"+name+"1.txt";
     std::ofstream outfile (namefile);
     outfile<< "Details" <<std::endl;
     outfile << name << std::endl;
     outfile << address << std::endl;
-    outfile << asctime(dateofBirthday) <<std::endl;
+    outfile << dateofBirthday->tm_year<<std::endl;
+    outfile << dateofBirthday->tm_mon<<std::endl;
+    outfile << dateofBirthday->tm_mday<<std::endl;
     outfile.close();
 }
+

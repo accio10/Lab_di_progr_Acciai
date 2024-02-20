@@ -4,7 +4,7 @@
 #include "Account.h"
 #include <time.h>
 
-User * GenerateAccount();
+User * GenerateAccount(bool creato);
 
 tm* CreateDate();
 
@@ -25,13 +25,14 @@ int main() {
     int sel=0;
     User* user;
     std::vector<std::unique_ptr<User>> contacts;
+    std::string n;
     std::cout<< "Benvenuto premere 1 per creare un account oppure 2 per uscire "<<std::endl;
     do {
         std::cin >> sel;
     } while (!Checkinput(sel, 1 ,2));
     switch (sel) {
         case 1: {
-            user = GenerateAccount();
+            user = GenerateAccount(false);
             CreateAccount(user);
             break;
         }
@@ -162,7 +163,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             int c=0;
             for(auto &item: *vector) {
                 if (nome == item->getName())
-                    tmp = std::make_unique<User>(item->getName(), item->getAddress(), item->getDateofBirthday());
+                    tmp = std::make_unique<User>(item->getName(), item->getAddress(), item->getDateofBirthday(),true);
                 c++;
             }
             if(tmp== nullptr)
@@ -179,12 +180,13 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
         }
         case 2:
         {
-            User* tmp= GenerateAccount();
+            User* tmp= GenerateAccount(true);
             CreateAccount(tmp);
             int value;
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
             user->OperationtoUser(-value,"Payment",tmp->getAccount());
+            std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }
     }
@@ -210,7 +212,7 @@ void Operazioni() {
 
 }
 
-User * GenerateAccount() {
+User * GenerateAccount(bool creato) {
     std::string nome;
     tm*  datadinascita=new tm;
     std::string indirizzo;
@@ -229,7 +231,7 @@ User * GenerateAccount() {
         c++;
 
     }while(!CheckDate(datadinascita));
-    User * user= new User(nome,indirizzo,datadinascita);
+    User * user= new User(nome,indirizzo,datadinascita,creato);
     return user;
 }
 tm* CreateDate()
