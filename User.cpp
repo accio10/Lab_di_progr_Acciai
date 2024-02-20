@@ -139,9 +139,9 @@ void User::printTransaction(Transaction &transaction) const {
 
 void User::printforDate(tm *Datetransaction) const {
     if(accountalive) {
-        std::vector<Transaction> transaction = account->getAllOperation();
+        std::vector<Transaction> transaction = account->getTransactionforDate(Datetransaction);
         for (auto &item: transaction) {
-            if(item.EqualDate(Datetransaction,item.getDate()))
+            //if(item.EqualDate(Datetransaction,item.getDate()))
                 printTransaction(item);
         }
     }
