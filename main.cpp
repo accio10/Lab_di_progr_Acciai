@@ -79,7 +79,7 @@ int main() {
             case 4:
             {
                 Payment(user,& contacts);
-                std::cout<<"Pagamento effettuato!"<<std::endl;
+
                 break;
             }
             case 5:
@@ -157,13 +157,22 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             std::string nome;
             std::cout<<"Inserire il nome"<<std::endl;
             std::cin>>nome;
-            for(auto &item: *vector)
-                if(nome==item->getName())
-                    tmp=std::make_unique<User>(item->getName(),item->getAddress(),item->getDateofBirthday());
+            int c=0;
+            for(auto &item: *vector) {
+                if (nome == item->getName())
+                    tmp = std::make_unique<User>(item->getName(), item->getAddress(), item->getDateofBirthday());
+                c++;
+            }
+            if(tmp== nullptr)
+            {
+                std::cout<< "Errore nessun contatto con quel nome"<<std::endl;
+                break;
+            }
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             int value;
             std::cin>>value;
             user->OperationtoUser(-value,"Payment", tmp->getAccount());
+            std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }
         case 2:

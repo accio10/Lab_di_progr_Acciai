@@ -134,14 +134,16 @@ void User::printTransaction(Transaction &transaction) const {
         std::cout << "Sender: " << transaction.getSender() << std::endl;
         std::cout << "Importo: " << transaction.getValue() << std::endl;
         std::cout << "Causa: " << transaction.getCause() << std::endl;
+        std::cout<< "Date: "<< asctime(transaction.getDate())<<std::endl;
     }
 }
 
 void User::printforDate(tm *Datetransaction) const {
     if(accountalive) {
-        std::vector<Transaction> transaction = account->getTransactionforDate(Datetransaction);
+        std::vector<Transaction> transaction = account->getAllOperation();
         for (auto &item: transaction) {
-            printTransaction(item);
+            if(item.EqualDate(Datetransaction,item.getDate()))
+                printTransaction(item);
         }
     }
 }

@@ -51,7 +51,8 @@ std::vector<Transaction> Account::getOperation(std::string type) const {
 std::vector<Transaction> Account::getTransactionforDate(tm *dateTime) const{
     std::vector<Transaction>result ;
     for (auto & item: historytransaction) {
-        if(asctime(dateTime)==item->getDate())
+        tm *tmp= item->getDate();
+        if(item->EqualDate(tmp,dateTime))
             result.push_back(*(item));
     }
     return result;

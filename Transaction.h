@@ -13,9 +13,14 @@ public:
         this->sender=sender;
         this->typeoftransaction=tpt;
         this->cause=causa;
-        time_t t;
-        t=time(nullptr);
-        dateTime= ctime(&t);
+        time_t now = time(0);
+
+        dateTime = localtime(&now);
+        dateTime->tm_year=dateTime->tm_year+1900;
+        dateTime->tm_mon=dateTime->tm_mon+1;
+        //time_t t;
+        //t=time(nullptr);
+        //dateTime= ctime(&t);
 
     }
     Transaction(int value, std::string tpt,std::string sender,std::string causa,tm* set)
@@ -23,7 +28,7 @@ public:
         this->valueoftransaction=value;
         this->sender=sender;
         this->typeoftransaction=tpt;
-        dateTime= asctime(set);
+        dateTime= set;
         this->cause=cause;
 
     }
@@ -32,7 +37,7 @@ public:
     {
         return typeoftransaction;
     }
-    std::string getDate()const{
+    tm*  getDate()const{
         return dateTime;
     }
     int getValue() const{
@@ -55,7 +60,8 @@ public:
 
 private:
     std::string typeoftransaction;
-    std::string dateTime;
+   // std::string
+    tm *dateTime;
     std::string cause;
     int valueoftransaction;
     std::string sender;
