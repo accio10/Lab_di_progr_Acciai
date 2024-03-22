@@ -3,6 +3,8 @@
 #include "User.h"
 #include "Account.h"
 #include <time.h>
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 User * GenerateAccount(bool creato);
 
@@ -21,7 +23,10 @@ void Payment(User *user, std::vector<std::unique_ptr<User>> *vector);
 void PrintTransaction(User *user ,int i);
 
 int main() {
-
+    /*
+    testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
+*/
     int sel=0;
     User* user;
     std::vector<std::unique_ptr<User>> contacts;
@@ -33,7 +38,6 @@ int main() {
     switch (sel) {
         case 1: {
             user = GenerateAccount(false);
-            CreateAccount(user);
             break;
         }
         case 2:{
@@ -55,7 +59,7 @@ int main() {
                 do {
                     std::cin >> importo;
                 }while(!Checkinput(importo,1,650));
-                user->Operation(-importo,"Prelievo");
+                user->Operation(-importo,Prelievo);
                 std::cout<<"Prelievo effettuato!"<<std::endl;
                 break;
             }
@@ -66,7 +70,7 @@ int main() {
                 do {
                     std::cin >> importo;
                 }while(!Checkinput(importo,0,1000));
-                user->Operation(importo,"Versamento");
+                user->Operation(importo,Versamento);
                 std::cout<<"Versamento effettuato!"<<std::endl;
                 break;
             }
@@ -162,8 +166,9 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             std::cin>>nome;
             int c=0;
             for(auto &item: *vector) {
-                if (nome == item->getName())
-                    tmp = std::make_unique<User>(item->getName(), item->getAddress(), item->getDateofBirthday(),true);
+                if (nome == item->getName()) {
+                    tmp = std::make_unique<User>(item->getName(), item->getAddress(), item->getDateofBirthday(), true);
+                }
                 c++;
             }
             if(tmp== nullptr)
@@ -174,7 +179,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             int value;
             std::cin>>value;
-            user->OperationtoUser(-value,"Payment", tmp->getAccount());
+            user->OperationtoUser(-value,Pagamento, tmp->getAccount());
             std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }
@@ -185,7 +190,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             int value;
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
-            user->OperationtoUser(-value,"Payment",tmp->getAccount());
+            user->OperationtoUser(-value,Pagamento,tmp->getAccount());
             std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }
@@ -231,12 +236,13 @@ User * GenerateAccount(bool creato) {
         c++;
 
     }while(!CheckDate(datadinascita));
-    User * user= new User(nome,indirizzo,datadinascita,creato);
+    User *user;
+    user = new User(nome, indirizzo, datadinascita, creato);
     return user;
 }
 tm* CreateDate()
 {
-    tm* res;
+    tm* res= new tm;
     int day;
 
     do {

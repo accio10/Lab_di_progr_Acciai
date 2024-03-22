@@ -9,22 +9,22 @@
 #include <strstream>
 #include <fstream>
 
-void Account::Operation(std::string n, int value, std::string cause) {
+void Account::Operation(std::string& n, int value, CausaTransazione cause) {
     if(balance+value>minbalance){
         balance=balance +value;
         if(value>=0) {
-            historytransaction.push_back(std::make_unique<Transaction>(value, "Inflow", n, cause));
-            writeReport(new Transaction(value,"Inflow",n,cause));
+            historytransaction.push_back(std::make_unique<Transaction>(value, Inflow, n, cause));
+            writeReport(new Transaction(value,Inflow,n,cause));
         }
         else {
-            historytransaction.push_back(std::make_unique<Transaction>(value, "Outflow", n, cause));
-            writeReport(new Transaction(value,"Outflow",n,cause));
+            historytransaction.push_back(std::make_unique<Transaction>(value, Outflow, n, cause));
+            writeReport(new Transaction(value,Outflow,n,cause));
         }
     }
     else
         throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()));
 }
-void Account::OperationforUser(std::string n, int value, std::string cause, std::unique_ptr<Account>& account) {
+void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, std::unique_ptr<Account>& account) {
     this->Operation(n,value,cause);
     int tmp=-value;
     account->Operation(n,tmp,cause);
@@ -39,7 +39,7 @@ int const Account::getminBalance() const {
     return minbalance;
 }
 
-std::vector<Transaction> Account::getOperation(std::string type) const {
+std::vector<Transaction> Account::getOperation(TipoTransazioni type) const {
     std::vector<Transaction> result;
     for(auto & item: historytransaction)
     {

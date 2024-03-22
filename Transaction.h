@@ -5,37 +5,38 @@
 #ifndef LAB_DI_PROGR_ACCIAI_TRANSACTION_H
 #define LAB_DI_PROGR_ACCIAI_TRANSACTION_H
 #include <time.h>
-
+#include <string>
+enum TipoTransazioni{Inflow,Outflow};
+enum CausaTransazione{Prelievo,Versamento,Pagamento,TEST};
 class Transaction{
 public:
-    Transaction( int v, std::string tpt, std::string sender,std::string causa){
-        this->valueoftransaction=v;
-        this->sender=sender;
-        this->typeoftransaction=tpt;
-        this->cause=causa;
-        time_t now = time(0);
 
+    Transaction( int v, TipoTransazioni tpt, std::string sender,CausaTransazione cause){//booleano oppure enum meglio
+        valueoftransaction=v;
+        this->sender=sender;
+        this->cause=cause;
+        this->tpt=tpt;
+        time_t now = time(0);
         dateTime = localtime(&now);
         dateTime->tm_year=dateTime->tm_year+1900;
         dateTime->tm_mon=dateTime->tm_mon+1;
-        //time_t t;
-        //t=time(nullptr);
-        //dateTime= ctime(&t);
 
+        //usare liste di transazioni
     }
-    Transaction(int value, std::string tpt,std::string sender,std::string causa,tm* set)
+    Transaction(int value, TipoTransazioni tpt,std::string sender,CausaTransazione causa,tm* set)
     {
+
         this->valueoftransaction=value;
         this->sender=sender;
-        this->typeoftransaction=tpt;
+        this->tpt=tpt;
         dateTime= set;
         this->cause=cause;
 
     }
 
-    std::string getTypeof() const
+    TipoTransazioni getTypeof() const
     {
-        return typeoftransaction;
+        return tpt;
     }
     tm*  getDate()const{
         return dateTime;
@@ -43,7 +44,7 @@ public:
     int getValue() const{
         return valueoftransaction;
     }
-    std::string getCause()const{
+    CausaTransazione getCause()const{
         return cause;
     }
     std::string getSender() const
@@ -59,13 +60,13 @@ public:
 
 
 private:
-    std::string typeoftransaction;
+   // std::string typeoftransaction;
    // std::string
     tm *dateTime;
-    std::string cause;
+    CausaTransazione cause;
     int valueoftransaction;
     std::string sender;
-
+    TipoTransazioni tpt;
 };
 
 

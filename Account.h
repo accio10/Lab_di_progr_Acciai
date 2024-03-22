@@ -9,13 +9,13 @@
 #include <time.h>
 #include "Transaction.h"
 
-
+enum TipoTransazioni;
 class Account{
 public:
-    explicit Account(std::string nam,std::string nf,int mbal,int bal=0):name(std::move(nam)),namefile(nf), balance(bal), minbalance(mbal){}
+    Account(std::string nam,std::string nf,int mbal,int bal=0):name(std::move(nam)),namefile(nf), balance(bal), minbalance(mbal){}
 
-    void Operation(std::string n,int value,std::string cause); //Eseguire un operazione
-    void OperationforUser(std::string n,int value,std::string cause,std::unique_ptr<Account> &account);
+    void Operation(std::string& n,int value,CausaTransazione); //Eseguire un operazione
+    void OperationforUser(std::string& n,int value,CausaTransazione,std::unique_ptr<Account> &account);
     void AddTransaction(const Transaction & transaction);
     Transaction removeTransaction(int index);
 
@@ -24,10 +24,9 @@ public:
     const int getminBalance() const;
 
 
-    std::vector<Transaction> getAllOperation() const;
-
-    std::vector<Transaction> getOperation(std:: string type) const;
-    std::vector<Transaction> getTransactionforDate(tm * dateTime) const;
+    std::vector<Transaction> getAllOperation() const;//Transaction da mettere
+    std::vector<Transaction> getOperation(TipoTransazioni type) const;//transaction
+    std::vector<Transaction> getTransactionforDate(tm * dateTime) const;//transaction
 
     void writeReport(Transaction *transaction);
 

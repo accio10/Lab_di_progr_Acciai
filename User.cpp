@@ -21,17 +21,19 @@ bool User::AccountisAlive() const {
 std::string User::getNamefile() const {
     return namefile;
 }
+void User::CreateAccount(User *user){
+    Account* account=new Account(user->getName(),user->getNamefile(),-10000) ;
+    AddAccount(*account);
+}
 void User::AddAccount(Account &a) {
     this->account=std::make_unique<Account>(a.getName(),namefile,a.getminBalance());
 }
 std::unique_ptr<Account>& User::getAccount() {
-    //std::unique_ptr<Account> tmp=std::make_unique<Account>(name,namefile,-10000,account->getBalance());
-    //return tmp;
     return this->account;
 }
 
 
-bool User::Operation(int value, std::string cause) {
+bool User::Operation(int value, CausaTransazione cause) {
     if(accountalive) {
         try {
             account->Operation(this->name, value, cause);
@@ -46,7 +48,7 @@ bool User::Operation(int value, std::string cause) {
     return false;
 }
 
-bool User::OperationtoUser(int value,std::string cause,std::unique_ptr<Account>& account1) {
+bool User::OperationtoUser(int value,CausaTransazione cause,std::unique_ptr<Account>& account1) {
 
     if (accountalive) {
         try {
@@ -103,7 +105,7 @@ void User::printUser() const {
 void User::printInflowHistory() const {
     if(accountalive) {
         std::vector<Transaction> transactions;
-        transactions = this->account->getOperation("Inflow");
+        transactions = this->account->getOperation(Inflow);
         bool find = false;
         for (auto &item: transactions) {
             printTransaction(item);
@@ -117,7 +119,7 @@ void User::printInflowHistory() const {
 void User::printOutflowHistory() const {
     if(accountalive) {
         std::vector<Transaction> transactions;
-        transactions = this->account->getOperation("Outflow");
+        transactions = this->account->getOperation(Outflow);
         bool find = false;
         for (auto &item: transactions) {
             printTransaction(item);
@@ -140,8 +142,7 @@ void User::printTransaction(Transaction &transaction) const {
 void User::printforDate(tm *Datetransaction) const {
     if(accountalive) {
         std::vector<Transaction> transaction = account->getTransactionforDate(Datetransaction);
-        for (auto &item: transaction) {
-            //if(item.EqualDate(Datetransaction,item.getDate()))
+        for (auto & item: transaction) {
                 printTransaction(item);
         }
     }

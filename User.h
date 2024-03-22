@@ -12,6 +12,7 @@
 #include "Account.h"
 #include <iostream>
 #include <fstream>
+enum TipoTransazioni;
 class User{
 public:
     explicit User(std::string name,std::string address, tm* dateofbirthday,bool crea){
@@ -20,6 +21,7 @@ public:
         this->dateofBirthday=dateofbirthday;
         accountalive=true;
         GenerateReport(crea);
+        CreateAccount(this);
     }
 //getter e metodo per alive
     std::string getName() const;
@@ -29,10 +31,11 @@ public:
     std::unique_ptr<Account>& getAccount();
     std::string getNamefile()const ;
     void GenerateReport(bool crea);
+    void CreateAccount(User *user);
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
-    bool Operation(int value,std::string cause);
-    bool  OperationtoUser(int value, std::string cause, std::unique_ptr<Account>& account);
+    bool Operation(int value,CausaTransazione cause);
+    bool  OperationtoUser(int value, CausaTransazione cause, std::unique_ptr<Account>& account);
     void addTransaction(Transaction & transaction);
     bool removeTransaction(int index);
     void deleteAccount();
