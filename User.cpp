@@ -7,9 +7,11 @@
 
 
 std::string User::getName() const {
+
     return name;
 }
 std::string User::getAddress() const {
+
     return address;
 }
 tm* User::getDateofBirthday() const {
@@ -19,14 +21,19 @@ bool User::AccountisAlive() const {
     return accountalive;
 }
 std::string User::getNamefile() const {
+
     return namefile;
 }
 void User::CreateAccount(User *user){
-    Account* account=new Account(user->getName(),user->getNamefile(),-10000) ;
+    std::string n= user->getName();
+    std::string nf=user->getNamefile();
+    Account* account=new Account(n,nf,-10000) ;
     AddAccount(*account);
 }
 void User::AddAccount(Account &a) {
-    this->account=std::make_unique<Account>(a.getName(),namefile,a.getminBalance());
+    std::string nf=namefile;
+    std::string n=a.getName();
+    this->account=std::make_unique<Account>(n,nf,a.getminBalance());
 }
 std::unique_ptr<Account>& User::getAccount() {
     return this->account;

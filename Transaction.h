@@ -11,7 +11,7 @@ enum CausaTransazione{Prelievo,Versamento,Pagamento,TEST};
 class Transaction{
 public:
 
-    Transaction( int v, TipoTransazioni tpt, std::string sender,CausaTransazione cause){//booleano oppure enum meglio
+    Transaction( int v, TipoTransazioni tpt, std::string& sender,CausaTransazione cause){//booleano oppure enum meglio
         valueoftransaction=v;
         this->sender=sender;
         this->cause=cause;
@@ -23,7 +23,7 @@ public:
 
         //usare liste di transazioni
     }
-    Transaction(int value, TipoTransazioni tpt,std::string sender,CausaTransazione causa,tm* set)
+    Transaction(int value, TipoTransazioni tpt,std::string& sender,CausaTransazione causa,tm* set)
     {
 
         this->valueoftransaction=value;
@@ -60,8 +60,7 @@ public:
 
 
 private:
-   // std::string typeoftransaction;
-   // std::string
+
     tm *dateTime;
     CausaTransazione cause;
     int valueoftransaction;

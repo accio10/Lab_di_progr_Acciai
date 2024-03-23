@@ -51,7 +51,7 @@ int main() {
         Operazioni();
         do{
          std::cin>>scelta;
-        }while(!Checkinput(scelta,0,9));
+        }while(!Checkinput(scelta,0,10));
         switch(scelta){
             case 1: {
                 int importo;
@@ -74,25 +74,38 @@ int main() {
                 std::cout<<"Versamento effettuato!"<<std::endl;
                 break;
             }
-            case 3:
+            case 3:{
+                std::cout<<"Prego andare a inserire la data della transazione da effettuare"<<std::endl;
+                int importo;
+                tm* date=CreateDate();
+                std::cout<<"Prego inserire l'importo della transazione"<<std::endl;
+                do{
+                    std::cin>>importo;
+                }while(!Checkinput(importo,0,1000));
+                std::string n=user->getName();
+                Transaction *t = new Transaction(importo, Outflow,n,Pagamento,date);
+                user->addTransaction(*t);
+                std::cout<<"Transazione aggiunta con successo"<<std::endl;
+                break;
+            }
+            case 4:
             {
                 int balance=user->getAccount()->getBalance();
                 std::cout<<"Il saldo attuale è: " <<std::endl;
                 std::cout<<balance <<std::endl;
                 break;
             }
-            case 4:
+            case 5:
             {
                 Payment(user,& contacts);
-
                 break;
             }
-            case 5:
+            case 6:
             {
                 user->printUser();
                 break;
             }
-            case 6:
+            case 7:
             {
                 int sel;
                 std::cout<<"Digitare 1 se si vuole visualizzare tutte le operazioni"<<std::endl;
@@ -102,19 +115,19 @@ int main() {
                 PrintTransaction(user,sel);
                 break;
             }
-            case 7:
+            case 8:
             {
                 tm* Date= CreateDate();
                 user->printforDate(Date);
                 break;
             }
-            case 8:
+            case 9:
             {
                 std::cout<<"Il report è questo:"<<std::endl;
                 user->readReport();
                 break;
             }
-            case 9:
+            case 10:
             {
                 user->deleteAccount();
                 std::cout<<"eliminazione completata"<<std::endl;
@@ -167,7 +180,9 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             int c=0;
             for(auto &item: *vector) {
                 if (nome == item->getName()) {
-                    tmp = std::make_unique<User>(item->getName(), item->getAddress(), item->getDateofBirthday(), true);
+                    std::string nome=item->getName();
+                    std::string add=item->getAddress();
+                    tmp = std::make_unique<User>(nome, add, item->getDateofBirthday(), true);
                 }
                 c++;
             }
@@ -199,20 +214,23 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
 }
 
 void CreateAccount(User *pUser) {
-        Account* account=new Account(pUser->getName(),pUser->getNamefile(),-10000) ;
+    std::string n=pUser->getName();
+    std::string nf= pUser->getNamefile();
+        Account* account=new Account(n,nf,-10000) ;
         pUser->AddAccount(*account);
 }
 
 void Operazioni() {
     std::cout<< "Premere 1 per Prelevare"<<std::endl;
     std::cout<< "Premere 2 per Versare"<<std::endl;
-    std::cout<<"Premere 3 per vedere il saldo"<<std::endl;
-    std::cout <<"Premere 4 per fare un versamento"<<std::endl;
-    std::cout <<"Premere 5 per vedere le informazioni relative all'account" <<std::endl;
-    std::cout<< "Premere 6 per vedere le transazioni eseguite"<<std::endl;
-    std::cout<<"Premere 7 per cercare una transazione per data"<<std::endl;
-    std::cout<< "Premere 8 per leggere il proprio report"<< std::endl;
-    std::cout<< "Premere 9 per cancellare l'account "<<std::endl;
+    std::cout<<"Premere 3 per aggiungere una transazione "<<std::endl;
+    std::cout<<"Premere 4 per vedere il saldo"<<std::endl;
+    std::cout <<"Premere 5 per fare un versamento"<<std::endl;
+    std::cout <<"Premere 6 per vedere le informazioni relative all'account" <<std::endl;
+    std::cout<< "Premere 7 per vedere le transazioni eseguite"<<std::endl;
+    std::cout<<"Premere 8 per cercare una transazione per data"<<std::endl;
+    std::cout<< "Premere 9 per leggere il proprio report"<< std::endl;
+    std::cout<< "Premere 10 per cancellare l'account "<<std::endl;
     std::cout<< "Premere 0 per uscire "<<std::endl;
 
 }

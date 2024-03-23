@@ -10,6 +10,7 @@
 #include <fstream>
 
 void Account::Operation(std::string& n, int value, CausaTransazione cause) {
+
     if(balance+value>minbalance){
         balance=balance +value;
         if(value>=0) {

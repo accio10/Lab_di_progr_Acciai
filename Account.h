@@ -12,7 +12,13 @@
 enum TipoTransazioni;
 class Account{
 public:
-    Account(std::string nam,std::string nf,int mbal,int bal=0):name(std::move(nam)),namefile(nf), balance(bal), minbalance(mbal){}
+    Account(std::string& nam,std::string& nf,int mbal,int bal=0)
+    {
+        this->name=nam;
+        this->namefile=nf;
+        balance=bal;
+        minbalance=mbal;
+    }
 
     void Operation(std::string& n,int value,CausaTransazione); //Eseguire un operazione
     void OperationforUser(std::string& n,int value,CausaTransazione,std::unique_ptr<Account> &account);
