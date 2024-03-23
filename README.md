@@ -1,1 +1,2 @@
-Laboratorio di programmazzione sulle transazioni finanziarie
+Laboratorio di Programmazzione sulle transazioni bancarie da parte di un utente
+
