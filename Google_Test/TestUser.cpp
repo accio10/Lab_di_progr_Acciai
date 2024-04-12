@@ -60,7 +60,7 @@ TEST_F(TesterUser,checkactiveaccount){//eseguo un test per verificare che l'atti
     bool active = tested->AccountisAlive();
     ASSERT_EQ(true, active);
 }
-TEST_F(TesterUser,CheckAddAccount){//eseguo un test che verfica che il nuovo utente sia stato inserito nella rubrica del utente
+/*TEST_F(TesterUser,CheckAddAccount){//eseguo un test che verfica che il nuovo utente sia stato inserito nella rubrica del utente
     tested->getAccount()->AddAccount(tested2);
     ASSERT_EQ(1,tested->getAccount()->getSizeofRubrica());
-}
+}*/

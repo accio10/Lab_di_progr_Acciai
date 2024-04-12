@@ -25,12 +25,10 @@ if(value<minversamento) {
 }else
     throw (std::runtime_error("Error you want pay a user or put too much money in your account!!"));
 }
-void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, User& user) {
-    AddAccount(user);
+void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, std::unique_ptr<Account>& account1) {
     this->Operation(n,value,cause);
     int tmp=-value;
-    user.getAccount()->Operation(n,tmp,cause);
-
+    account1->Operation(n,tmp,cause);
 }
 int Account::getBalance() const {
     return balance;
@@ -87,20 +85,3 @@ void Account::writeReport(Transaction *transaction) {
     outfile.close();
 }
 
-void Account::AddAccount(User &user) {
-    std::string name1= user.getName();
-    std::string address= user.getAddress();
-    rubrica.push_back(std::make_unique<User>(name1,address,user.getDateofBirthday(),false));
-}
-
-void Account::getNameOfUser() const {
-    std::cout<<"Gli utenti presenti in rubrica sono"<<std::endl;
-    for(auto &item: rubrica){
-        std::string n= item->getName();
-        std::cout<<n<<std::endl;
-    }
-}
-
-int Account::getSizeofRubrica() const {
-    return rubrica.size();
-}

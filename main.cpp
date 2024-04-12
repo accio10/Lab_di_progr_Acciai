@@ -172,7 +172,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
     }while(!Checkinput(scelta,1,2));
     switch(scelta){
         case 1:{
-            user->getAccount()->getNameOfUser();
+           // user->getAccount()->getNameOfUser();
             std::string nome;
             std::cout<<"Inserire il nome"<<std::endl;
             std::cin>>nome;
@@ -205,6 +205,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
             user->OperationtoUser(-value,Pagamento,tmp->getAccount());
+
             std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }

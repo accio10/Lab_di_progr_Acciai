@@ -8,7 +8,6 @@
 #include <vector>
 #include <memory>
 #include <time.h>
-
 #include "Account.h"
 #include <iostream>
 #include <fstream>
@@ -35,7 +34,7 @@ public:
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
     bool Operation(int value,CausaTransazione cause);
-    bool  OperationtoUser(int value, CausaTransazione cause, std::unique_ptr<Account>& account);
+    bool  OperationtoUser(int value, CausaTransazione cause, std::unique_ptr<Account> &account1);
     void addTransaction(Transaction & transaction);
     bool removeTransaction(int index);
     void deleteAccount();
