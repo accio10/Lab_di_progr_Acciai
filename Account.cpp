@@ -10,25 +10,27 @@
 #include <fstream>
 
 void Account::Operation(std::string& n, int value, CausaTransazione cause) {
-
-    if(balance+value>minbalance){
-        balance=balance +value;
-        if(value>=0) {
+if(value<minversamento) {
+    if (balance + value > minbalance) {
+        balance = balance + value;
+        if (value >= 0) {
             historytransaction.push_back(std::make_unique<Transaction>(value, Inflow, n, cause));
-            writeReport(new Transaction(value,Inflow,n,cause));
-        }
-        else {
+            writeReport(new Transaction(value, Inflow, n, cause));
+        } else {
             historytransaction.push_back(std::make_unique<Transaction>(value, Outflow, n, cause));
-            writeReport(new Transaction(value,Outflow,n,cause));
+            writeReport(new Transaction(value, Outflow, n, cause));
         }
-    }
-    else
-        throw (std::runtime_error("Error, you have exceeded your maximum withdrawal "+ getBalance()));
+    } else
+        throw (std::runtime_error("Error, you have exceeded your maximum withdrawal " + getBalance()));
+}else
+    throw (std::runtime_error("Error you want pay a user or put too much money in your account!!"));
 }
-void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, std::unique_ptr<Account>& account) {
+void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, User& user) {
+    AddAccount(user);
     this->Operation(n,value,cause);
     int tmp=-value;
-    account->Operation(n,tmp,cause);
+    user.getAccount()->Operation(n,tmp,cause);
+
 }
 int Account::getBalance() const {
     return balance;
@@ -83,4 +85,22 @@ void Account::writeReport(Transaction *transaction) {
     outfile <<"Cause: "<<transaction->getCause()<<std::endl;
     outfile <<"Date: "<<transaction->getDate()<<std::endl;
     outfile.close();
+}
+
+void Account::AddAccount(User &user) {
+    std::string name1= user.getName();
+    std::string address= user.getAddress();
+    rubrica.push_back(std::make_unique<User>(name1,address,user.getDateofBirthday(),false));
+}
+
+void Account::getNameOfUser() const {
+    std::cout<<"Gli utenti presenti in rubrica sono"<<std::endl;
+    for(auto &item: rubrica){
+        std::string n= item->getName();
+        std::cout<<n<<std::endl;
+    }
+}
+
+int Account::getSizeofRubrica() const {
+    return rubrica.size();
 }

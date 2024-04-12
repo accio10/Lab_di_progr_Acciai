@@ -15,7 +15,7 @@
 enum TipoTransazioni;
 class User{
 public:
-    explicit User(std::string& name,std::string& address, tm* dateofbirthday,bool crea){
+     User(std::string& name,std::string& address, tm* dateofbirthday,bool crea){
         this->name=name;
         this->address=address;
         this->dateofBirthday=dateofbirthday;

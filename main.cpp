@@ -23,7 +23,7 @@ void Payment(User *user, std::vector<std::unique_ptr<User>> *vector);
 void PrintTransaction(User *user ,int i);
 
 int main() {
-    /*
+/*
     testing::InitGoogleTest();
     return RUN_ALL_TESTS();
 */
@@ -67,9 +67,7 @@ int main() {
             {
                 int importo;
                 std::cout<< "Digitare la somma da versare"<<std::endl;
-                do {
-                    std::cin >> importo;
-                }while(!Checkinput(importo,0,1000));
+                std::cin >> importo;
                 user->Operation(importo,Versamento);
                 std::cout<<"Versamento effettuato!"<<std::endl;
                 break;
@@ -174,6 +172,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
     }while(!Checkinput(scelta,1,2));
     switch(scelta){
         case 1:{
+            user->getAccount()->getNameOfUser();
             std::string nome;
             std::cout<<"Inserire il nome"<<std::endl;
             std::cin>>nome;
@@ -216,8 +215,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
 void CreateAccount(User *pUser) {
     std::string n=pUser->getName();
     std::string nf= pUser->getNamefile();
-        Account* account=new Account(n,nf,-10000) ;
-        pUser->AddAccount(*account);
+    Account* account=new Account(n,nf,-10000) ;
 }
 
 void Operazioni() {
@@ -241,7 +239,8 @@ User * GenerateAccount(bool creato) {
     std::string indirizzo;
 
     std::cout<<"inserire il nome utente"<<std::endl;
-    std::cin >> nome;
+    ws(std::cin);
+    getline(std::cin,nome);
     std::cout<< "Inserire l'indiirizzo di residenza "<<std::endl;
     ws(std::cin);
     getline(std::cin,indirizzo);

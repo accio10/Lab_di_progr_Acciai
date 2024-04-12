@@ -18,8 +18,6 @@ public:
         this->tpt=tpt;
         time_t now = time(0);
         dateTime = localtime(&now);
-        dateTime->tm_year=dateTime->tm_year+1900;
-        dateTime->tm_mon=dateTime->tm_mon+1;
 
         //usare liste di transazioni
     }
