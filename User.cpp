@@ -27,15 +27,16 @@ std::string User::getNamefile() const {
 void User::CreateAccount(User *user){
     std::string n= user->getName();
     std::string nf=user->getNamefile();
-    Account* account=new Account(n,nf,-10000) ;
-    AddAccount(*account);
+    std::unique_ptr<Account>a = std::make_unique<Account>(n,nf,-10000);
+    AddAccount(a);
 }
-void User::AddAccount(Account &a) {
+void User::AddAccount(std::unique_ptr<Account> &a) {
     std::string nf=namefile;
-    std::string n=a.getName();
-    this->account=std::make_unique<Account>(n,nf,a.getminBalance());
-
+    std::string n=a->getName();
+    this->account=std::make_unique<Account>(n,nf,a->getminBalance());
+    rubrica.push_back(std::make_unique<Account>(n,nf,1000));
 }
+
 
 std::unique_ptr<Account>& User::getAccount() {
     return this->account;
@@ -62,6 +63,7 @@ bool User::OperationtoUser(int value,CausaTransazione cause,std::unique_ptr<Acco
     if (accountalive) {
         try {
             account->OperationforUser(name, value, cause, account1);
+
         }
         catch (std::runtime_error &e) {
             std::printf(e.what());
@@ -177,5 +179,30 @@ void User::GenerateReport(bool creato) {
     outfile << dateofBirthday->tm_mon<<std::endl;
     outfile << dateofBirthday->tm_mday<<std::endl;
     outfile.close();
+}
+
+int User::Sizeofrubrica() {
+    return rubrica.size();
+}
+
+void User::printRubrica() {
+    std::cout<<"i nomi salvati in rubrica sono:"<<std::endl;
+    for( auto &i :rubrica)
+    {
+        std::cout<<i->getName()<<std::endl;
+    }
+
+}
+
+std::unique_ptr<Account> User::findUser(User &user1,std::string & name) const {
+    for (auto &i: rubrica) {
+        if(i->getName()==name)
+        {
+            std::string n= i->getName();
+            std::string nf= i->getNameFile();
+            return std::make_unique<Account>(n,nf,i->getminBalance());
+        }
+    }
+    return nullptr;
 }
 

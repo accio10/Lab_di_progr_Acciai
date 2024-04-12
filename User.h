@@ -31,6 +31,9 @@ public:
     std::string getNamefile()const ;
     void GenerateReport(bool crea);
     void CreateAccount(User *user);
+    int Sizeofrubrica();
+    std::unique_ptr<Account> findUser(User & user1,std::string &name) const;
+
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
     bool Operation(int value,CausaTransazione cause);
@@ -38,10 +41,12 @@ public:
     void addTransaction(Transaction & transaction);
     bool removeTransaction(int index);
     void deleteAccount();
-    void AddAccount(Account &a);
+    void AddAccount(std::unique_ptr<Account> &a);
+
     //metodi per la visualizzazzione di informazioni
 
     void printUser() const;
+    void printRubrica();
     void printInflowHistory() const;
     void printOutflowHistory() const;
     void printforDate(tm *Datetransaction) const;
@@ -61,6 +66,7 @@ private:
     bool accountalive;
     std::unique_ptr<Account> account;
     std::string namefile;
+    std::vector<std::unique_ptr<Account>>rubrica;
 };
 
 

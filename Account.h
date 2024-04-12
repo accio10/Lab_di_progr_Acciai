@@ -29,6 +29,7 @@ public:
     int getBalance() const;
     const std::string getName() const;
     const int getminBalance() const;
+    const std::string getNameFile() const;
 
 
 

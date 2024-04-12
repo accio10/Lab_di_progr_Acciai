@@ -18,7 +18,7 @@ void Operazioni();
 
 void CreateAccount(User *pUser);
 
-void Payment(User *user, std::vector<std::unique_ptr<User>> *vector);
+void Payment(User *user);
 
 void PrintTransaction(User *user ,int i);
 
@@ -29,7 +29,6 @@ int main() {
 */
     int sel=0;
     User* user;
-    std::vector<std::unique_ptr<User>> contacts;
     std::string n;
     std::cout<< "Benvenuto premere 1 per creare un account oppure 2 per uscire "<<std::endl;
     do {
@@ -95,7 +94,7 @@ int main() {
             }
             case 5:
             {
-                Payment(user,& contacts);
+                Payment(user);
                 break;
             }
             case 6:
@@ -163,37 +162,27 @@ void PrintTransaction(User * user,int i) {
     }
 }
 
-void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
+void Payment(User *user ) {
     int scelta=0;
-    std::unique_ptr<User> tmp;
     std::cout<<"Premi 1 per i contatti in rubrica, premi 2 per un nuovo contatto "<<std::endl;
     do {
         std::cin >> scelta;
     }while(!Checkinput(scelta,1,2));
     switch(scelta){
         case 1:{
-           // user->getAccount()->getNameOfUser();
+            user->printRubrica();
             std::string nome;
             std::cout<<"Inserire il nome"<<std::endl;
             std::cin>>nome;
-            int c=0;
-            for(auto &item: *vector) {
-                if (nome == item->getName()) {
-                    std::string nome=item->getName();
-                    std::string add=item->getAddress();
-                    tmp = std::make_unique<User>(nome, add, item->getDateofBirthday(), true);
-                }
-                c++;
-            }
-            if(tmp== nullptr)
-            {
-                std::cout<< "Errore nessun contatto con quel nome"<<std::endl;
+            std::unique_ptr<Account> utente=user->findUser(*user,nome);
+            if(utente==nullptr) {
+                throw std::runtime_error("Utente non trovato");
                 break;
             }
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             int value;
             std::cin>>value;
-            user->OperationtoUser(-value,Pagamento, tmp->getAccount());
+            user->OperationtoUser(-value,Pagamento, utente);
             std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }
@@ -205,7 +194,7 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
             user->OperationtoUser(-value,Pagamento,tmp->getAccount());
-
+            user->AddAccount(tmp->getAccount());
             std::cout<<"Pagamento effettuato!"<<std::endl;
             break;
         }
@@ -214,9 +203,11 @@ void Payment(User *user ,std::vector<std::unique_ptr<User>> *vector) {
 }
 
 void CreateAccount(User *pUser) {
+
     std::string n=pUser->getName();
     std::string nf= pUser->getNamefile();
-    Account* account=new Account(n,nf,-10000) ;
+    std::unique_ptr<Account> account=std::make_unique<Account>(n,nf,-10000) ;
+    pUser->AddAccount(account);
 }
 
 void Operazioni() {

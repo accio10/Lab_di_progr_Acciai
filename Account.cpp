@@ -85,3 +85,7 @@ void Account::writeReport(Transaction *transaction) {
     outfile.close();
 }
 
+const std::string Account::getNameFile() const {
+    return namefile;
+}
+
