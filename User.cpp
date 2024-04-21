@@ -4,6 +4,7 @@
 #include "User.h"
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 
 std::string User::getName() const {
@@ -191,13 +192,14 @@ void User::GenerateReport(bool creato) {
     outfile << dateofBirthday->tm_mday<<std::endl;
     outfile.close();
 }
-std::unique_ptr<Account> User::findUser(User &user1,std::string & name) const {
+std::unique_ptr<Account> User::findUser(User &user1,std::string & name) {
     for (auto &i: rubrica) {
         if(i->getName()==name)
         {
             std::string n= i->getName();
             std::string nf= i->getNameFile();
             return std::make_unique<Account>(n,nf,i->getminBalance());
+
         }
     }
     return nullptr;

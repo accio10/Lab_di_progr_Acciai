@@ -29,19 +29,19 @@ public:
     bool AccountisAlive() const;
     std::unique_ptr<Account>& getAccount();
     std::string getNamefile()const ;
-    void GenerateReport(bool crea);
-    void CreateAccount(User *user);
+    void GenerateReport(bool crea); //Funzione per la generazione del report
+    void CreateAccount(User *user); //Funzione per la generazione dell' account per l'user
     int Sizeofrubrica();
-    std::unique_ptr<Account> findUser(User & user1,std::string &name) const;
+    std::unique_ptr<Account> findUser(User & user1,std::string &name) ; //Funzione per ricercare un utente nella rubrica
 
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
-    bool Operation(int value,CausaTransazione cause);
-    bool  OperationtoUser(int value, CausaTransazione cause, std::unique_ptr<Account> &account1);
-    void addTransaction(Transaction & transaction);
-    bool removeTransaction(int index);
+    bool Operation(int value,CausaTransazione cause);//funzione per operazione sul conto proprio
+    bool  OperationtoUser(int value, CausaTransazione cause, std::unique_ptr<Account> &account1);//operazione verso utenti
+    void addTransaction(Transaction & transaction);//funzione per aggiungere transazione
+    bool removeTransaction(int index);//funzione per rimuovere transazione
     void deleteAccount();
-    void AddAccount(std::unique_ptr<Account> &a);
+    void AddAccount(std::unique_ptr<Account> &a);//funzione per aggiungere nuovi account
 
     //metodi per la visualizzazzione di informazioni
 
@@ -66,7 +66,7 @@ private:
     bool accountalive;
     std::unique_ptr<Account> account;
     std::string namefile;
-    std::vector<std::unique_ptr<Account>>rubrica;
+    std::vector<std::unique_ptr<Account>> rubrica;
 };
 
 
