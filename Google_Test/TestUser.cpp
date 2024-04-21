@@ -51,6 +51,7 @@ TEST_F(TesterUser,transferValidationUser){//Eseguo un test per vedere se effetti
     tested->Operation(200,TEST);
     ASSERT_EQ(200,tested->getAccount()->getBalance());
 }
+
 TEST_F(TesterUser, transferUnvalidUser){//eseguo test per verificare che il versamento non venga eseguito se supera una certa cifra
     tested->Operation(2000,TEST);
     ASSERT_EQ(0,tested->getAccount()->getBalance());
@@ -60,3 +61,30 @@ TEST_F(TesterUser,checkactiveaccount){//eseguo un test per verificare che l'atti
     bool active = tested->AccountisAlive();
     ASSERT_EQ(true, active);
 }
+
+TEST_F(TesterUser, transferValidationforUser){//eseguo test per verificare che ci sia stato il corretto versamento
+    tested->OperationtoUser(200,TEST,tested2->getAccount());
+    ASSERT_EQ(tested->getAccount()->getBalance(),-200);
+    ASSERT_EQ(tested2->getAccount()->getBalance(),200);
+}
+
+TEST_F(TesterUser, checkaddaccount){ //eseguo test per verificare che il nuovo contatto sia salvato nella rubrica
+    tested->AddAccount(tested2->getAccount());
+    ASSERT_EQ(tested->Sizeofrubrica(),2);
+}
+
+TEST_F(TesterUser,checkAddTransaction)
+{
+    std::string n=tested->getName();
+    Transaction* t= new Transaction(20,Inflow,n,TEST);
+    tested->addTransaction(*t);
+    ASSERT_EQ(tested->getAccount()->getSizeofTransaction(),1);
+}
+
+TEST_F(TesterUser, checkDeletedAccount)
+{
+    tested->deleteAccount();
+    ASSERT_EQ(tested->AccountisAlive(),false);
+}
+
+

@@ -26,10 +26,11 @@ if(value<minversamento) {
     throw (std::runtime_error("Error you want pay a user or put too much money in your account!!"));
 }
 void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, std::unique_ptr<Account>& account1) {
-    this->Operation(n,value,cause);
-    int tmp=-value;
+    this->Operation(n,-value,cause);
+    int tmp=value;
     account1->Operation(n,tmp,cause);
 }
+
 int Account::getBalance() const {
     return balance;
 }
@@ -38,6 +39,12 @@ const std::string Account::getName() const {
 }
 int const Account::getminBalance() const {
     return minbalance;
+}
+const std::string Account::getNameFile() const {
+    return namefile;
+}
+const int Account::getSizeofTransaction() const {
+    return historytransaction.size();
 }
 
 std::vector<Transaction> Account::getOperation(TipoTransazioni type) const {
@@ -85,7 +92,7 @@ void Account::writeReport(Transaction *transaction) {
     outfile.close();
 }
 
-const std::string Account::getNameFile() const {
-    return namefile;
-}
+
+
+
 

@@ -30,6 +30,7 @@ public:
     const std::string getName() const;
     const int getminBalance() const;
     const std::string getNameFile() const;
+    const int getSizeofTransaction() const;
 
 
 

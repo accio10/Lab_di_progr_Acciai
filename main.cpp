@@ -23,10 +23,10 @@ void Payment(User *user);
 void PrintTransaction(User *user ,int i);
 
 int main() {
-/*
+
     testing::InitGoogleTest();
     return RUN_ALL_TESTS();
-*/
+
     int sel=0;
     User* user;
     std::string n;
@@ -182,8 +182,10 @@ void Payment(User *user ) {
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             int value;
             std::cin>>value;
-            user->OperationtoUser(-value,Pagamento, utente);
-            std::cout<<"Pagamento effettuato!"<<std::endl;
+            if(user->OperationtoUser(-value,Pagamento, utente))
+                std::cout<<"Pagamento effettuato!"<<std::endl;
+            else
+                std::cout<<"Errore pagamento non effettuato"<<std::endl;
             break;
         }
         case 2:
@@ -193,9 +195,12 @@ void Payment(User *user ) {
             int value;
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
-            user->OperationtoUser(-value,Pagamento,tmp->getAccount());
-            user->AddAccount(tmp->getAccount());
-            std::cout<<"Pagamento effettuato!"<<std::endl;
+            if(user->OperationtoUser(-value,Pagamento,tmp->getAccount())) {
+                user->AddAccount(tmp->getAccount());
+                std::cout << "Pagamento effettuato!" << std::endl;
+            }
+            else
+                std::cout<<"Errore pagamneto non effettuato"<<std::endl;
             break;
         }
     }

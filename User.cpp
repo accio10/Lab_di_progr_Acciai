@@ -24,6 +24,10 @@ std::string User::getNamefile() const {
 
     return namefile;
 }
+std::unique_ptr<Account>& User::getAccount() {
+    return this->account;
+}
+
 void User::CreateAccount(User *user){
     std::string n= user->getName();
     std::string nf=user->getNamefile();
@@ -36,12 +40,9 @@ void User::AddAccount(std::unique_ptr<Account> &a) {
     this->account=std::make_unique<Account>(n,nf,a->getminBalance());
     rubrica.push_back(std::make_unique<Account>(n,nf,1000));
 }
-
-
-std::unique_ptr<Account>& User::getAccount() {
-    return this->account;
+int User::Sizeofrubrica() {
+    return rubrica.size();
 }
-
 
 bool User::Operation(int value, CausaTransazione cause) {
     if(accountalive) {
@@ -57,7 +58,6 @@ bool User::Operation(int value, CausaTransazione cause) {
     }
     return false;
 }
-
 bool User::OperationtoUser(int value,CausaTransazione cause,std::unique_ptr<Account>& account1) {
 
     if (accountalive) {
@@ -94,6 +94,8 @@ void User::deleteAccount() {
         accountalive = false;
         clearReport();
 }
+
+
 void User::readReport() const {
     char c;
     std::ifstream read(namefile);
@@ -111,6 +113,14 @@ void User::printUser() const {
     std::cout<< this->getAddress()<<std::endl;
     std::cout<< this->getDateofBirthday()<<std::endl;
     std::cout<< this->AccountisAlive()<<std::endl;
+}
+void User::printRubrica() {
+    std::cout<<"i nomi salvati in rubrica sono:"<<std::endl;
+    for( auto &i :rubrica)
+    {
+        std::cout<<i->getName()<<std::endl;
+    }
+
 }
 
 void User::printInflowHistory() const {
@@ -149,7 +159,6 @@ void User::printTransaction(Transaction &transaction) const {
         std::cout<< "Date: "<< asctime(transaction.getDate())<<std::endl;
     }
 }
-
 void User::printforDate(tm *Datetransaction) const {
     if(accountalive) {
         std::vector<Transaction> transaction = account->getTransactionforDate(Datetransaction);
@@ -165,6 +174,8 @@ void User::printAllTransaction() const {
             printTransaction(item);
     }
 }
+
+
 void User::GenerateReport(bool creato) {
     namefile="report"+name+".txt";
     std::fstream outfile1(namefile);
@@ -180,20 +191,6 @@ void User::GenerateReport(bool creato) {
     outfile << dateofBirthday->tm_mday<<std::endl;
     outfile.close();
 }
-
-int User::Sizeofrubrica() {
-    return rubrica.size();
-}
-
-void User::printRubrica() {
-    std::cout<<"i nomi salvati in rubrica sono:"<<std::endl;
-    for( auto &i :rubrica)
-    {
-        std::cout<<i->getName()<<std::endl;
-    }
-
-}
-
 std::unique_ptr<Account> User::findUser(User &user1,std::string & name) const {
     for (auto &i: rubrica) {
         if(i->getName()==name)
