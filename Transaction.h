@@ -45,7 +45,10 @@ public:
     }
     std::string getSender() const
     {return sender;}
-
+    void setDate(tm* date)
+    {
+        this->dateTime=date;
+    }
     bool EqualDate(tm *a, tm *b) {
         if(a->tm_year==b->tm_year && a->tm_mon==b->tm_mon &&a->tm_mday==b->tm_mday ) {
             return true;

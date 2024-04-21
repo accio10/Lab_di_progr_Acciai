@@ -73,7 +73,7 @@ TEST_F(TesterUser, checkaddaccount){ //eseguo test per verificare che il nuovo c
     ASSERT_EQ(tested->Sizeofrubrica(),2);
 }
 
-TEST_F(TesterUser,checkAddTransaction)
+TEST_F(TesterUser,checkAddTransaction) //eseguo test per verificare che una transazione venga aggiunta correttamente
 {
     std::string n=tested->getName();
     Transaction* t= new Transaction(20,Inflow,n,TEST);
@@ -81,7 +81,7 @@ TEST_F(TesterUser,checkAddTransaction)
     ASSERT_EQ(tested->getAccount()->getSizeofTransaction(),1);
 }
 
-TEST_F(TesterUser, checkDeletedAccount)
+TEST_F(TesterUser, checkDeletedAccount)//eseguo il test per verificare che l'account venga disabilitato
 {
     tested->deleteAccount();
     ASSERT_EQ(tested->AccountisAlive(),false);

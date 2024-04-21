@@ -21,13 +21,13 @@ public:
         tested2=std::make_unique<Account>(name2,namefile2,-1000);
     }
 };
-TEST_F(TesterAccount,depositTest){
+TEST_F(TesterAccount,depositTest){ //eseguo test per la corretta verifica che il deposito sia effettuato
     std::string name=tested->getName();
     tested->Operation(name,20,TEST);
     ASSERT_EQ(20,tested->getBalance());
 }
 
-TEST_F(TesterAccount,TransferTest)
+TEST_F(TesterAccount,TransferTest) //eseguo test per la corretta verifica che il versamento sia effettuato
 {
     EXPECT_EQ(tested->getBalance(),0);
     std::string name=tested->getName();
@@ -36,7 +36,7 @@ TEST_F(TesterAccount,TransferTest)
     ASSERT_EQ(tested->getBalance(),-20);
 }
 
-TEST_F(TesterAccount,depositTestUnvalid)
+TEST_F(TesterAccount,depositTestUnvalid) //eseguo un test per verificare che dopo un deposito fallito il conto non abbia avuto modifiche
 {
     std::string name=tested->getName();
     try {
@@ -47,7 +47,7 @@ TEST_F(TesterAccount,depositTestUnvalid)
     }
 }
 
-TEST_F(TesterAccount, checkRemoveTransaction){
+TEST_F(TesterAccount, checkRemoveTransaction){ //eseguo test per la verifica della rimozione di una transazione
     std::string name=tested->getName();
     Transaction* t= new Transaction(20,Inflow,name,TEST);
     Transaction* t1= new Transaction(20,Inflow,name,TEST);
@@ -59,3 +59,4 @@ TEST_F(TesterAccount, checkRemoveTransaction){
     tested->removeTransaction(0);
     ASSERT_EQ(tested->getSizeofTransaction(),2);
 }
+

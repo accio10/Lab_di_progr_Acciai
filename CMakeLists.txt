@@ -9,6 +9,7 @@ include_directories(Google_Test/googletest-main/googlemock/include)
 add_executable(Lab_di_progr_Acciai main.cpp Account.cpp User.cpp
         Google_Test/TestUser.cpp
         Google_Test/TestAccount.cpp
+        Google_Test/TestTransaction.cpp
 
 )
 
