@@ -57,7 +57,6 @@ public:
 
     void readReport() const;
     void clearReport();
-    void ciao()
 
 
 private:
