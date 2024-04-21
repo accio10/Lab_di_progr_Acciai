@@ -27,7 +27,7 @@ Questa classe effettivamente va a creare una transazione che può essere creata 
 Questa classe si occupa di creare, inserire e cancellare transazioni, essa si basa su un vettore di unique_ptr della classe Transaction essendo che la transazione deve essere unica quando viene creata o inserita 
 Questa classe si occupa inoltre di andare a scrivere il report dell’Utente sul proprio file di testo quando vengono fatte le opportune operazioni sulle transazioni 
 Infine essa si occupa anche di andare a ricercare dentro il vettore le transazioni sia tutte le transazioni sia transazioni per ricerca basata su data oppure per la tipologia della transazione cercata
-User: È la classe che crea un utente a partire dal nome, dalla data di nascita, e dal indirizzo di residenza.
+3.  User: È la classe che crea un utente a partire dal nome, dalla data di nascita, e dal indirizzo di residenza.
 Nella creazione di un istanza la classe va anche a generare il report relativo all’ utente andando a inserire primariamente le informazioni dell’utente elencate prima, e successivamente va anche a creare l’ account per l’utente stesso 
 Questa classe si occupa delle operazione che un utente può andare a eseguire, infatti può andare a eseguire delle transazioni con i relativi metodi che si rifanno sia a operazioni del conto proprio dell’ utente, sia per operazioni verso altri utenti
 Infatti in questa classe viene definito un vettore di unique_ptr di Account “rubrica” che salva in memoria gli account degli utenti con cui va a eseguire delle operazioni cosi da velocizzare le successive operazioni tra l’utente stesso e gli altri utenti già salvati in rubrica
