@@ -12,7 +12,7 @@ class TesterAccount:public ::testing::Test{
 public:
     std::unique_ptr<Account> tested;
     std::unique_ptr<Account> tested2;
-    std::unique_ptr<Account> accountnull= std::unique_ptr<Account>(nullptr);
+    std::unique_ptr<Account> accountnull = std::unique_ptr<Account>(nullptr);
     TesterAccount(){
         std::string name="test";
         std::string name2="test2";
