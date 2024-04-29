@@ -14,6 +14,7 @@ public:
     std::tm* date;
     std::unique_ptr<User>tested2;
     std::tm* date2;
+    std::unique_ptr<Account> accountnull= std::unique_ptr<Account>(nullptr);
 
     TesterUser(){
         date = nullptr;
@@ -48,12 +49,12 @@ public:
 
 TEST_F(TesterUser,transferValidationUser){//Eseguo un test per vedere se effettivamente il versamento viene eseguito
 
-    tested->Operation(200,TEST);
+    tested->Operation(200,TEST,accountnull);
     ASSERT_EQ(200,tested->getAccount()->getBalance());
 }
 
 TEST_F(TesterUser, transferUnvalidUser){//eseguo test per verificare che il versamento non venga eseguito se supera una certa cifra
-    tested->Operation(2000,TEST);
+    tested->Operation(2000,TEST,accountnull);
     ASSERT_EQ(0,tested->getAccount()->getBalance());
 }
 
@@ -63,7 +64,7 @@ TEST_F(TesterUser,checkactiveaccount){//eseguo un test per verificare che l'atti
 }
 
 TEST_F(TesterUser, transferValidationforUser){//eseguo test per verificare che ci sia stato il corretto versamento
-    tested->OperationtoUser(200,TEST,tested2->getAccount());
+    tested->Operation(200,TEST,tested2->getAccount());
     ASSERT_EQ(tested->getAccount()->getBalance(),-200);
     ASSERT_EQ(tested2->getAccount()->getBalance(),200);
 }

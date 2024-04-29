@@ -9,7 +9,7 @@
 #include <strstream>
 #include <fstream>
 
-void Account::Operation(std::string& n, int value, CausaTransazione cause) {
+void Account::Operation(std::string& n, int value, CausaTransazione cause,std::unique_ptr<Account> &account1) {
 if(value<minversamento) {
     if (balance + value > minbalance) {
         balance = balance + value;
@@ -20,16 +20,17 @@ if(value<minversamento) {
             historytransaction.push_back(std::make_unique<Transaction>(value, Outflow, n, cause));
             writeReport(new Transaction(value, Outflow, n, cause));
         }
+        if(account1!= nullptr){
+            int tmp=value;
+            std::unique_ptr<Account> acc=std::unique_ptr<Account>(nullptr);
+            account1->Operation(n,tmp,cause, acc);
+        }
     } else
         throw (std::runtime_error("Error, you have exceeded your maximum withdrawal " + getBalance()));
 }else
     throw (std::runtime_error("Error you want pay a user or put too much money in your account!!"));
 }
-void Account::OperationforUser(std::string& n, int value, CausaTransazione cause, std::unique_ptr<Account>& account1) {
-    this->Operation(n,-value,cause);
-    int tmp=value;
-    account1->Operation(n,tmp,cause);
-}
+
 
 int Account::getBalance() const {
     return balance;

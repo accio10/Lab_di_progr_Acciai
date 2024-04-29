@@ -23,10 +23,10 @@ void Payment(User *user);
 void PrintTransaction(User *user ,int i);
 
 int main() {
-
+/*
     testing::InitGoogleTest();
     return RUN_ALL_TESTS();
-
+*/
     int sel=0;
     User* user;
     std::string n;
@@ -46,6 +46,7 @@ int main() {
     }
     while(true)
     {
+        std::unique_ptr<Account> null=std::unique_ptr<Account>(nullptr);
         int scelta=0;
         Operazioni();
         do{
@@ -58,7 +59,7 @@ int main() {
                 do {
                     std::cin >> importo;
                 }while(!Checkinput(importo,1,650));
-                user->Operation(-importo,Prelievo);
+                user->Operation(-importo,Prelievo,null);
                 std::cout<<"Prelievo effettuato!"<<std::endl;
                 break;
             }
@@ -67,7 +68,7 @@ int main() {
                 int importo;
                 std::cout<< "Digitare la somma da versare"<<std::endl;
                 std::cin >> importo;
-                user->Operation(importo,Versamento);
+                user->Operation(importo,Versamento,null);
                 std::cout<<"Versamento effettuato!"<<std::endl;
                 break;
             }
@@ -182,7 +183,7 @@ void Payment(User *user ) {
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             int value;
             std::cin>>value;
-            if(user->OperationtoUser(-value,Pagamento, utente))
+            if(user->Operation(-value,Pagamento, utente))
                 std::cout<<"Pagamento effettuato!"<<std::endl;
             else
                 std::cout<<"Errore pagamento non effettuato"<<std::endl;
@@ -195,7 +196,7 @@ void Payment(User *user ) {
             int value;
             std::cout<<"Inserire l'importo da versare"<<std::endl;
             std::cin>>value;
-            if(user->OperationtoUser(-value,Pagamento,tmp->getAccount())) {
+            if(user->Operation(-value,Pagamento,tmp->getAccount())) {
                 user->AddAccount(tmp->getAccount());
                 std::cout << "Pagamento effettuato!" << std::endl;
             }

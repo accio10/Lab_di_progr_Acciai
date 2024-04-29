@@ -12,6 +12,7 @@ class TesterAccount:public ::testing::Test{
 public:
     std::unique_ptr<Account> tested;
     std::unique_ptr<Account> tested2;
+    std::unique_ptr<Account> accountnull= std::unique_ptr<Account>(nullptr);
     TesterAccount(){
         std::string name="test";
         std::string name2="test2";
@@ -23,7 +24,7 @@ public:
 };
 TEST_F(TesterAccount,depositTest){ //eseguo test per la corretta verifica che il deposito sia effettuato
     std::string name=tested->getName();
-    tested->Operation(name,20,TEST);
+    tested->Operation(name,20,TEST,accountnull);
     ASSERT_EQ(20,tested->getBalance());
 }
 
@@ -31,7 +32,7 @@ TEST_F(TesterAccount,TransferTest) //eseguo test per la corretta verifica che il
 {
     EXPECT_EQ(tested->getBalance(),0);
     std::string name=tested->getName();
-    tested->OperationforUser(name,20,TEST,tested2);
+    tested->Operation(name,20,TEST,tested2);
     ASSERT_EQ(tested2->getBalance(),20);
     ASSERT_EQ(tested->getBalance(),-20);
 }
@@ -40,7 +41,7 @@ TEST_F(TesterAccount,depositTestUnvalid) //eseguo un test per verificare che dop
 {
     std::string name=tested->getName();
     try {
-        tested->Operation(name, 1001, TEST);
+        tested->Operation(name, 1001, TEST,accountnull);
     }
     catch(std::runtime_error &e) {
         ASSERT_EQ(tested->getBalance(), 0);
@@ -60,3 +61,6 @@ TEST_F(TesterAccount, checkRemoveTransaction){ //eseguo test per la verifica del
     ASSERT_EQ(tested->getSizeofTransaction(),2);
 }
 
+//aggiungere test ricerca transazioni
+// formattazione codice
+//operation for user da eliminare

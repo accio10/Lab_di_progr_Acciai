@@ -36,8 +36,8 @@ public:
 
 
     //metodi per operazioni sul conto proprio o sul conto di alrti user
-    bool Operation(int value,CausaTransazione cause);//funzione per operazione sul conto proprio
-    bool  OperationtoUser(int value, CausaTransazione cause, std::unique_ptr<Account> &account1);//operazione verso utenti
+    bool Operation(int value,CausaTransazione cause,std::unique_ptr<Account>& account1);//funzione per operazione sul conto proprio
+    bool  OperationtoUser(int value, CausaTransazione cause);//operazione verso utenti
     void addTransaction(Transaction & transaction);//funzione per aggiungere transazione
     bool removeTransaction(int index);//funzione per rimuovere transazione
     void deleteAccount();

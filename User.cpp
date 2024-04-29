@@ -45,36 +45,35 @@ int User::Sizeofrubrica() {
     return rubrica.size();
 }
 
-bool User::Operation(int value, CausaTransazione cause) {
+bool User::Operation(int value, CausaTransazione cause,std::unique_ptr<Account> &account1) {
+    std::unique_ptr<Account> acc= std::unique_ptr<Account>(nullptr);
     if(accountalive) {
-        try {
-            account->Operation(this->name, value, cause);
+        if(account1== nullptr){
+            try {
+                account->Operation(this->name, value, cause,acc  );
+            }
+            catch (std::runtime_error &e) {
+                std::printf(e.what());
+                return false;
+            }
+            return true;
         }
-        catch (std::runtime_error &e) {
-            std::printf(e.what());
-            return false;
+        else{
+            try {
+                account->Operation(name, value, cause, account1);
+            }
+            catch (std::runtime_error &e) {
+                std::printf(e.what());
+                return false;
+            }
+            return true;
         }
-        return true;
 
     }
     return false;
+
 }
-bool User::OperationtoUser(int value,CausaTransazione cause,std::unique_ptr<Account>& account1) {
 
-    if (accountalive) {
-        try {
-            account->OperationforUser(name, value, cause, account1);
-
-        }
-        catch (std::runtime_error &e) {
-            std::printf(e.what());
-            return false;
-        }
-        return true;
-
-    }
-    return false;
-}
 void User::addTransaction(Transaction &transaction) {
     if(accountalive) {
         account->AddTransaction(transaction);

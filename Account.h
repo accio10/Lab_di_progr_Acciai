@@ -21,8 +21,7 @@ public:
         minversamento=minv;
     }
 
-    void Operation(std::string& n,int value,CausaTransazione); //Eseguire un operazione sul proprio account
-    void OperationforUser(std::string& n,int value,CausaTransazione,std::unique_ptr<Account> &account1);//Eseguire operazioni tra due account di utenti diversi
+    void Operation(std::string& n,int value,CausaTransazione,std::unique_ptr<Account>& account1); //Eseguire un operazione sul proprio account
     void AddTransaction(const Transaction & transaction);//Inserire una transazione in una determinata data
     Transaction removeTransaction(int index);
 
@@ -39,7 +38,7 @@ public:
     std::vector<Transaction> getTransactionforDate(tm * dateTime) const;//transaction
 
 
-    void writeReport(Transaction *transaction);
+    void writeReport(Transaction *transaction);//metodo costante
 
 private:
     std::string name;
