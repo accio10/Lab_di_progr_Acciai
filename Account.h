@@ -25,6 +25,7 @@ public:
     void Operation(std::string &n, int value, CausaTransazione,
                    std::unique_ptr<Account> &account1); //Eseguire un operazione sul proprio account
     void AddTransaction(const Transaction &transaction);//Inserire una transazione in una determinata data
+
     Transaction removeTransaction(int index);
 
     int getBalance() const;
@@ -37,9 +38,10 @@ public:
 
     const int getSizeofTransaction() const;
 
-
     std::vector<Transaction> getAllOperation() const;//Transaction da mettere
+
     std::vector<Transaction> getOperation(TipoTransazioni type) const;//transaction
+
     std::vector<Transaction> getTransactionforDate(tm *dateTime) const;//transaction
 
 

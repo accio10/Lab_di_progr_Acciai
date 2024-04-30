@@ -21,6 +21,16 @@ public:
         tested=std::make_unique<Account>(name,namefile,-1000);
         tested2=std::make_unique<Account>(name2,namefile2,-1000);
     }
+    tm *CreateDate() {
+        tm *date = new tm();
+        date->tm_year = 100;
+        date->tm_mon = 1;
+        date->tm_mday = 1;
+        date->tm_hour = 10;
+        date->tm_min = 10;
+        date->tm_sec = 10;
+        return date;
+    }
 };
 TEST_F(TesterAccount,depositTest){ //eseguo test per la corretta verifica che il deposito sia effettuato
     std::string name=tested->getName();
@@ -61,6 +71,41 @@ TEST_F(TesterAccount, checkRemoveTransaction){ //eseguo test per la verifica del
     ASSERT_EQ(tested->getSizeofTransaction(),2);
 }
 
+TEST_F(TesterAccount, checkAddTransaction){
+    std::string name =tested->getName();
+    Transaction* t= new Transaction(20,Inflow,name,TEST);
+    Transaction* t1= new Transaction(20,Inflow,name,TEST);
+    tested->AddTransaction(*t);
+    tested->AddTransaction(*t1);
+    ASSERT_EQ(tested->getSizeofTransaction(),2);
+}
+
+TEST_F(TesterAccount,checkGetAllOperation){
+    std::string name= tested->getName();
+    Transaction* t= new Transaction(20,Inflow,name,TEST);
+    tested->AddTransaction(*t);
+    ASSERT_EQ(tested->getSizeofTransaction(),1);
+    ASSERT_EQ(tested->getAllOperation().size(),1);
+}
+TEST_F(TesterAccount,checkGetOperation){
+    std::string name= tested->getName();
+    Transaction* t= new Transaction(20,Inflow,name,TEST);
+    tested->AddTransaction(*t);
+    Transaction* t1= new Transaction(20,Outflow,name,TEST);
+    tested->AddTransaction(*t1);
+    ASSERT_EQ(tested->getSizeofTransaction(),2);
+    ASSERT_EQ(tested->getOperation(Inflow).size(),1);
+}
+TEST_F(TesterAccount,checkGetTransactionForDate){
+    tm* date=CreateDate();
+    std::string name= tested->getName();
+    Transaction* t= new Transaction(20,Inflow,name,TEST,date);
+    tested->AddTransaction(*t);
+    Transaction* t1= new Transaction(20,Inflow,name,TEST,date);
+    tested->AddTransaction(*t1);
+    ASSERT_EQ(tested->getSizeofTransaction(),2);
+    ASSERT_EQ(tested->getTransactionforDate(date).size(),2);
+}
 //aggiungere test ricerca transazioni
 // formattazione codice
 //operation for user da eliminare

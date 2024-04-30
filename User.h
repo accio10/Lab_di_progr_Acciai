@@ -32,22 +32,23 @@ public:
 
     tm *getDateofBirthday() const;
 
-    bool AccountisAlive() const;
+    bool AccountisAlive() const;//
 
     std::unique_ptr<Account> &getAccount();
 
     std::string getNamefile() const;
 
     void GenerateReport(bool crea); //Funzione per la generazione del report
-    void CreateAccount(User *user); //Funzione per la generazione dell' account per l'user
+
+    void CreateAccount(User *user);  //Funzione per la generazione dell' account per l'user
+
     int Sizeofrubrica() const;
 
     std::unique_ptr<Account> findUser(User &user1, std::string &name); //Funzione per ricercare un utente nella rubrica
 
-
-    //metodi per operazioni sul conto proprio o sul conto di alrti user
     bool Operation(int value, CausaTransazione cause,
                    std::unique_ptr<Account> &account1);//funzione per operazione sul conto proprio
+
     bool OperationtoUser(int value, CausaTransazione cause);//operazione verso utenti
 
     void addTransaction(Transaction &transaction);//funzione per aggiungere transazione
@@ -57,8 +58,6 @@ public:
     void deleteAccount();
 
     void AddAccount(std::unique_ptr<Account> &a);//funzione per aggiungere nuovi account
-
-    //metodi per la visualizzazzione di informazioni
 
     void printUser() const;
 
@@ -74,12 +73,9 @@ public:
 
     void printAllTransaction() const;
 
-    //metodi leggere e scrivere le transazioni su file
-
     void readReport() const;
 
     void clearReport();
-
 
 private:
     std::string name;
