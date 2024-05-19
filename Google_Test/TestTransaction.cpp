@@ -33,8 +33,7 @@ public:
 
 };
 
-TEST_F(TesterTransaction, checkTimeAndDate)//eseguo test per la verifica della data
-{
+TEST_F(TesterTransaction, checkTimeAndDate) {
     tm *date = CreateDate();
     std::string name = tested->getSender();
     std::unique_ptr<Transaction> tested = std::make_unique<Transaction>(2, Inflow, name, TEST, date);

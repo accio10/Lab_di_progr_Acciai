@@ -103,7 +103,6 @@ void User::deleteAccount() {
     clearReport();
 }
 
-
 void User::readReport() const {
     char c;
     std::ifstream read(namefile);
@@ -125,7 +124,7 @@ void User::printUser() const {
     std::cout << this->AccountisAlive() << std::endl;
 }
 
-void User::printRubrica() const{
+void User::printRubrica() const {
     std::cout << "i nomi salvati in rubrica sono:" << std::endl;
     for (auto &i: rubrica) {
         std::cout << i->getName() << std::endl;
