@@ -109,4 +109,4 @@ TEST_F(TesterAccount,checkGetTransactionForDate){
 //aggiungere test ricerca transazioni
 // formattazione codice
 //operation for user da eliminare
-//fatto tutto
+//eseguito tutto
