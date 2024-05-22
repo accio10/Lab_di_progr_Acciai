@@ -23,9 +23,8 @@ void Payment(User *user);
 void PrintTransaction(User *user, int i);
 
 int main() {
-
-    // testing::InitGoogleTest();
-    //return RUN_ALL_TESTS();
+    testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
 
     int sel = 0;
     User *user;

@@ -67,7 +67,7 @@ TEST_F(TesterUser,
 }
 
 TEST_F(TesterUser, transferValidationforUser) {//eseguo test per verificare che ci sia stato il corretto versamento
-    tested->Operation(200, TEST, tested2->getAccount());
+    tested->Operation(-200, TEST, tested2->getAccount());
     ASSERT_EQ(tested->getAccount()->getBalance(), -200);
     ASSERT_EQ(tested2->getAccount()->getBalance(), 200);
 }

@@ -23,7 +23,7 @@ void Account::Operation(std::string &n, int value, CausaTransazione cause, std::
             if (account1 != nullptr) {
                 int tmp = value;
                 std::unique_ptr<Account> acc = std::unique_ptr<Account>(nullptr);
-                account1->Operation(n, tmp, cause, acc);
+                account1->Operation(n, -tmp, cause, acc);
             }
         } else
             throw (std::runtime_error("Error, you have exceeded your maximum withdrawal " + getBalance()));

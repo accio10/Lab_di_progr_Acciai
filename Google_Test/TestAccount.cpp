@@ -45,7 +45,7 @@ TEST_F(TesterAccount, depositTest) { //eseguo test per la corretta verifica che 
 TEST_F(TesterAccount, TransferTest) {
     EXPECT_EQ(tested->getBalance(), 0);
     std::string name = tested->getName();
-    tested->Operation(name, 20, TEST, tested2);
+    tested->Operation(name, -20, TEST, tested2);
     ASSERT_EQ(tested2->getBalance(), 20);
     ASSERT_EQ(tested->getBalance(), -20);
 }
