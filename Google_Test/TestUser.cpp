@@ -72,6 +72,12 @@ TEST_F(TesterUser, transferValidationforUser) {//eseguo test per verificare che 
     ASSERT_EQ(tested2->getAccount()->getBalance(), 200);
 }
 
+TEST_F(TesterUser, transferswitchValidation){
+    tested->Operation(200, TEST,tested2->getAccount());
+    ASSERT_EQ(tested->getAccount()->getBalance(),200);
+    ASSERT_EQ(tested2->getAccount()->getBalance(),-200);
+}
+
 TEST_F(TesterUser, checkaddaccount) { //eseguo test per verificare che il nuovo contatto sia salvato nella rubrica
     tested->AddAccount(tested2->getAccount());
     ASSERT_EQ(tested->Sizeofrubrica(), 2);
