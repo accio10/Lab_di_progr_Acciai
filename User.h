@@ -49,7 +49,7 @@ public:
     bool Operation(int value, CausaTransazione cause,
                    std::unique_ptr<Account> &account1);//funzione per operazione sul conto proprio
 
-    bool OperationtoUser(int value, CausaTransazione cause);//operazione verso utenti
+    //bool OperationtoUser(int value, CausaTransazione cause);//operazione verso utenti
 
     void addTransaction(Transaction &transaction);//funzione per aggiungere transazione
 

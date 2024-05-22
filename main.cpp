@@ -91,7 +91,13 @@ int main() {
                 break;
             }
             case 5: {
-                Payment(user);
+                try{
+                    Payment(user);
+                }
+                catch (std::runtime_error & e)
+                {
+                    std::cout<<e.what()<<std::endl;
+                }
                 break;
             }
             case 6: {
@@ -168,7 +174,6 @@ void Payment(User *user) {
             std::unique_ptr<Account> utente = user->findUser(*user, nome);
             if (utente == nullptr) {
                 throw std::runtime_error("Utente non trovato");
-                break;
             }
             std::cout << "Inserire l'importo da versare" << std::endl;
             int value;

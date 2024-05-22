@@ -24,6 +24,8 @@ public:
         this->tpt = tpt;
         time_t now = time(0);
         dateTime = localtime(&now);
+        dateTime->tm_mon=dateTime->tm_mon+1;
+        dateTime->tm_year=dateTime->tm_year+1900;
     }
 
     Transaction(int value, TipoTransazioni tpt, std::string &sender, CausaTransazione causa, tm *set) {

@@ -188,7 +188,6 @@ void User::printAllTransaction() const {
     }
 }
 
-
 void User::GenerateReport(bool creato) {
     namefile = "report" + name + ".txt";
     std::fstream outfile1(namefile);
